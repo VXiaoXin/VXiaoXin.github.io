@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="续上篇初识讲述了全局刷新和局部刷新,这篇这篇主要讲AJAX调用及其参数">
+<meta name="keywords" content="AJAX,异步处理,前端,基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AJAX基础05-AJAX调用及其参数">
+<meta property="og:url" content="https://vxiaoxin.github.io/2019/02/22/AJAX基础05-AJAX调用及其参数/index.html">
+<meta property="og:site_name" content="鱼非道-技术博客">
+<meta property="og:description" content="续上篇初识讲述了全局刷新和局部刷新,这篇这篇主要讲AJAX调用及其参数">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://vxiaoxin.github.io/2019/02/22/AJAX基础05-AJAX调用及其参数/ajax.jpg">
+<meta property="og:updated_time" content="2019-03-02T07:27:17.994Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AJAX基础05-AJAX调用及其参数">
+<meta name="twitter:description" content="续上篇初识讲述了全局刷新和局部刷新,这篇这篇主要讲AJAX调用及其参数">
+<meta name="twitter:image" content="https://vxiaoxin.github.io/2019/02/22/AJAX基础05-AJAX调用及其参数/ajax.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://vxiaoxin.github.io/2019/02/22/AJAX基础05-AJAX调用及其参数/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>AJAX基础05-AJAX调用及其参数 | 鱼非道-技术博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/VXiaoXin" target="_blank" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼非道-技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">孤客一身千里外,不知归日是何年.</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>目录</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vxiaoxin.github.io/2019/02/22/AJAX基础05-AJAX调用及其参数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fidel Yiu">
+      <meta itemprop="description" content="大悲大喜过后,我还曾渴望过什么呢?<br/>看着夕阳傻笑,看着霓虹灯落寞.<br/>可我还有梦想呀,你一定要加油.<br/>一直努力!">
+      <meta itemprop="image" content="/images/feidao-logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼非道-技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AJAX基础05-AJAX调用及其参数
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-22 19:30:14" itemprop="dateCreated datePublished" datetime="2019-02-22T19:30:14+08:00">2019-02-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-02 15:27:17" itemprop="dateModified" datetime="2019-03-02T15:27:17+08:00">2019-03-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/异步处理/" itemprop="url" rel="index"><span itemprop="name">异步处理</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/异步处理/AJAX/" itemprop="url" rel="index"><span itemprop="name">AJAX</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/02/22/AJAX基础05-AJAX调用及其参数/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/02/22/AJAX基础05-AJAX调用及其参数/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2019/02/22/AJAX基础05-AJAX调用及其参数/ajax.jpg" alt><br>续上篇初识讲述了全局刷新和局部刷新,这篇这篇主要讲AJAX调用及其参数<br><a id="more"></a></p>
+<h2 id="AJAX操作4步"><a href="#AJAX操作4步" class="headerlink" title="AJAX操作4步"></a>AJAX操作4步</h2><h3 id="1-创建AJAX实例"><a href="#1-创建AJAX实例" class="headerlink" title="1.创建AJAX实例"></a>1.创建AJAX实例</h3><p><code>let xhr = new XMLHttpRequest();</code></p>
+<h3 id="2-打开请求"><a href="#2-打开请求" class="headerlink" title="2.打开请求"></a>2.打开请求</h3><p><code>xhr.open([HTTP METHOD],[URL],[ASYNC],[USER-NAME],[USER-PASS]);</code></p>
+<ul>
+<li><code>HTTP METHOD</code> 请求方式  <ul>
+<li>GET</li>
+<li>DELETE</li>
+<li>HEAD</li>
+<li>OPTIONS</li>
+<li>POST</li>
+<li>PUT</li>
+<li>TRACE(不常用)</li>
+<li>CONNECT(不常用)</li>
+</ul>
+</li>
+<li><code>URL</code> 向服务器端发送请求的API</li>
+<li><code>ASYNC</code> 设置AJAX请求的同步异步<ul>
+<li>true:异步</li>
+<li>false:同步</li>
+</ul>
+</li>
+<li><code>USER-NAME/USER-PASS</code>：用户名密码，一般不用<h3 id="3-事件监听"><a href="#3-事件监听" class="headerlink" title="3.事件监听"></a>3.事件监听</h3><code>xhr.onreadystatechange=()=&gt;{}</code></li>
+</ul>
+<h3 id="4-发送AJAX请求"><a href="#4-发送AJAX请求" class="headerlink" title="4.发送AJAX请求"></a>4.发送AJAX请求</h3><p><code>xhr.send([请求主体内容]);</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//=&gt;1.创建AJAX实例：IE6中是不兼容的，使用的是new ActiveXObject来实现的</span></span><br><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"></span><br><span class="line"><span class="comment">//=&gt;2.打开请求：发送请求之前的一些配置项</span></span><br><span class="line">    <span class="comment">//1.HTTP METHOD 请求方式</span></span><br><span class="line">    <span class="comment">//  GET/DELETE/HEAD/OPTIONS</span></span><br><span class="line">    <span class="comment">//  POST/PUT</span></span><br><span class="line">    <span class="comment">//  不常用:/TRACE/CONNECT</span></span><br><span class="line">    <span class="comment">//2.URL 向服务器端发送请求的API</span></span><br><span class="line">    <span class="comment">//      （Application Programming Interface）接口地址</span></span><br><span class="line">    <span class="comment">//3.ASYNC 设置AJAX请求的同步异步，</span></span><br><span class="line">    <span class="comment">//      默认是异步（写TRUE也是异步），FALSE是同步，</span></span><br><span class="line">    <span class="comment">//      项目中都使用异步编程，防止阻塞后续代码执行</span></span><br><span class="line">    <span class="comment">//4.USER-NAME/USER-PASS：用户名密码，一般不用</span></span><br><span class="line">xhr.open([HTTP METHOD],[URL],[ASYNC],[USER-NAME],[USER-PASS]);</span><br><span class="line"></span><br><span class="line"><span class="comment">//=&gt;3.事件监听：一般监听的都是 READY-STATE-CHANGE 事件（AJAX状态改变事件），基于这个事件可以获取服务器返回的响应头响应主体内容</span></span><br><span class="line">xhr.onreadystatechange=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(xhr.readyState===<span class="number">4</span> &amp;&amp; xhr.status===<span class="number">200</span>)&#123;</span><br><span class="line">       xhr.responseText;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//=&gt;4.发送AJAX请求：从这步开始，当前AJAX任务开始，如果AJAX是同步的，后续代码不会执行，要等到AJAX状态成功后在执行，反之异步不会</span></span><br><span class="line">xhr.send([请求主体内容]);</span><br></pre></td></tr></table></figure></p>
+<h2 id="HTTP请求方式-HTTP-METHOD"><a href="#HTTP请求方式-HTTP-METHOD" class="headerlink" title="HTTP请求方式(HTTP METHOD)"></a>HTTP请求方式(HTTP METHOD)</h2><p>所有的请求都可以给服务器端传递内容，也都可以从服务器端获取内容</p>
+<h3 id="HTTP-METHOD的值"><a href="#HTTP-METHOD的值" class="headerlink" title="HTTP METHOD的值"></a>HTTP METHOD的值</h3><h4 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h4><p>从服务器端获取数据(给的少拿的多),所以一般都是用url后面的参数进行给</p>
+<h4 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h4><p>向服务器端推送数据(给的多拿的少),所以POST会把给的东西打包传送(表单)</p>
+<h4 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h4><p>删除服务器端的某些内容（一般是删除一些文件）</p>
+<h4 id="PUT"><a href="#PUT" class="headerlink" title="PUT"></a>PUT</h4><p>向服务器上存放一些内容（一般也是存放文件）</p>
+<h4 id="HEAD"><a href="#HEAD" class="headerlink" title="HEAD"></a>HEAD</h4><p>只想获取服务器返回的响应头信息，不要响应主体中的内容</p>
+<h4 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h4><p>一般使用它向服务器发送一个探测性请求，如果服务器端返回的信息了，说明当前客户端和服务器端建立了连接，我们可以继续执行其它请求了（TRACE是干这件事的，但是axios这个AJAX类库在基于cross domain进行跨域请求的时候，就是先发送OPTIONS请求进行探测尝试，如果能连通服务器，才会继续发送其它的请求）</p>
+<h3 id="GET和POST的区别"><a href="#GET和POST的区别" class="headerlink" title="GET和POST的区别"></a>GET和POST的区别</h3><p> [传递给服务器信息的方式不一样]</p>
+<ul>
+<li>GET是基于URL地址“问号传参”的方式把信息传递给服务器，</li>
+<li><p>POST是基于“请求主体”把信息传递给服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[GET]</span><br><span class="line">xhr.open(&apos;GET&apos;,&apos;/temp/list?xxx=xxx&amp;xxx=xxx&apos;)</span><br><span class="line"></span><br><span class="line">[POST]</span><br><span class="line">xhr.send(&apos;xxx=xxx&amp;xxx=xxx&apos;)</span><br></pre></td></tr></table></figure>
+<p>GET一般应用于拿（给服务器的会少一些），而POST给服务器的很多，如果POST是基于问号传参方式来搞会出现一些问题：URL会拼接很长，浏览器对于URL的长度有有最大限度（谷歌8KB 火狐7KB IE2KB …），超过的部分浏览器就把它截掉了 =&gt;所以GET请求可以基于URL传参，而POST都是使用请求主体传递（请求主体理论上是没有限制的，真实项目中我们会自己做大小限制，防止上传过大信息导致请求迟迟完不成）</p>
+<p>[GET不安全，POST相对安全]<br>因为GET是基于“问号传参”把信息传递给服务器的，容易被骇客进行URL劫持，POST是基于请求主体传递的，相对来说不好被劫持；所以登录、注册等涉及安全性的交互操作，我们都应该用POST请求；</p>
+<p>[GET会产生不可控制的缓存,POST不会]<br>不可控：不是想要就要，想不要就不要的，这是浏览器自主记忆的缓存，我们无法基于JS控制，真实项目中我们都会把这个缓存干掉<br>GET请求产生缓存是因为：连续多次向相同的地址（并且传递的参数信息也是相同的）发送请求，浏览器会把之前获取的数据从缓存中拿到返回，导致无法获取服务器最新的数据（POST不会）</p>
+<p>解决方案：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xhr.open(&apos;GET&apos;,`/temp/list?lx=1000&amp;_=$&#123;Math.random()&#125;`); //=&gt;保证每次请求的地址不完全一致：在每一次请求的末尾追加一个随机数即可(使用_作为属性名就是不想和其它的属性名冲突)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="AJAX状态-READY-STATE"><a href="#AJAX状态-READY-STATE" class="headerlink" title="AJAX状态(READY-STATE)"></a>AJAX状态(READY-STATE)</h2><h3 id="0"><a href="#0" class="headerlink" title="0"></a>0</h3><p>=&gt;UNSENT<br>刚开始创建XHR，还没有发送</p>
+<h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><p>=&gt;OPENED<br>已经执行了OPEN这个操作</p>
+<h3 id="2"><a href="#2" class="headerlink" title="2"></a>2</h3><p>=&gt;HEADERS_RECEIVED<br>已经发送AJAX请求（AJAX任务开始），<br>响应头信息已经被客户端接收了（响应头中包含了：服务器的时间、返回的HTTP状态码…）</p>
+<h3 id="3"><a href="#3" class="headerlink" title="3"></a>3</h3><p>=&gt;LOADING<br>响应主体内容正在返回</p>
+<h3 id="4"><a href="#4" class="headerlink" title="4"></a>4</h3><p>=&gt;DONE<br>响应主体内容已经被客户端接收</p>
+<h2 id="HTTP网络状态码-STATUS"><a href="#HTTP网络状态码-STATUS" class="headerlink" title="HTTP网络状态码(STATUS)"></a>HTTP网络状态码(STATUS)</h2><p>根据状态码能够清楚的反映出当前交互的结果及原因</p>
+<h3 id="成功2开头"><a href="#成功2开头" class="headerlink" title="成功2开头"></a>成功2开头</h3><h4 id="200"><a href="#200" class="headerlink" title="200"></a>200</h4><p> OK 成功(只能证明服务器成功返回信息了，但是信息不一定是你业务需要的)</p>
+<h3 id="重定向3开头"><a href="#重定向3开头" class="headerlink" title="重定向3开头"></a>重定向3开头</h3><h4 id="301"><a href="#301" class="headerlink" title="301"></a>301</h4><p>  Moved Permanently<br>  永久转移（永久重定向）=&gt;域名更改，访问原始域名重定向到新的域名</p>
+<h4 id="302"><a href="#302" class="headerlink" title="302"></a>302</h4><p>Move temporarily 临时转移（临时重定向 =&gt;307）</p>
+<p>=&gt;网站现在是基于HTTPS协议运作的，如果访问的是HTTP协议，会基于307重定向到HTTPS协议上</p>
+<p>=&gt;302一般用作服务器负载均衡：当一台服务器达到最大并发数的时候，会把后续访问的用户临时转移到其它的服务器机组上处理</p>
+<p>=&gt;偶尔真实项目中会把所有的图片放到单独的服务器上“图片处理服务器”，这样减少主服务器的压力，当用户向主服务器访问图片的时候，主服务器都把它转移到图片服务器上处理</p>
+<h3 id="设置缓存"><a href="#设置缓存" class="headerlink" title="设置缓存"></a>设置缓存</h3><h4 id="304"><a href="#304" class="headerlink" title="304"></a>304</h4><p>  Not Modified 设置缓存<br>=&gt;对于不经常更新的资源文件，例如：CSS/JS/HTML/IMG等，服务器会结合客户端设置304缓存，第一次加载过这些资源就缓存到客户端了，下次再获取的时候，是从缓存中获取；如果资源更新了，服务器端会通过最后修改时间来强制让客户端从服务器重新拉取；基于CTRL+F5强制刷新页面，304做的缓存就没有用了。</p>
+<h3 id="请求错误4开头"><a href="#请求错误4开头" class="headerlink" title="请求错误4开头"></a>请求错误4开头</h3><h4 id="400"><a href="#400" class="headerlink" title="400"></a>400</h4><p>  Bad Request =&gt;请求参数错误(无参数)</p>
+<h4 id="401"><a href="#401" class="headerlink" title="401"></a>401</h4><p>  Unauthorized =&gt;无权限访问</p>
+<h4 id="404"><a href="#404" class="headerlink" title="404"></a>404</h4><p>  Not Found =&gt;找不到资源(地址不存在)</p>
+<h4 id="413"><a href="#413" class="headerlink" title="413"></a>413</h4><p>  Request Entity Too Large =&gt;和服务器交互的内容资源超过服务器最大限制</p>
+<h3 id="服务器错误5开头"><a href="#服务器错误5开头" class="headerlink" title="服务器错误5开头"></a>服务器错误5开头</h3><h4 id="500"><a href="#500" class="headerlink" title="500"></a>500</h4><p>  Internal Server Error =&gt;未知的服务器错误</p>
+<h4 id="503"><a href="#503" class="headerlink" title="503"></a>503</h4><p>  Service Unavailable =&gt;服务器超负荷</p>
+<h2 id="关于XHR的属性和方法"><a href="#关于XHR的属性和方法" class="headerlink" title="关于XHR的属性和方法"></a>关于XHR的属性和方法</h2><p>这些东西大部分用在AJAX使用的第三步上,比如上面的例子里面调用的是Ajax的onreadystatechange属性,赋值了一个函数,从而定义了当请求状态发送改变之后所要做的事情.</p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>在浏览器的console里面输入<code>let xhr = new XMLHttpRequest();</code>然后<code>dir(xhr)</code>就能看到<code>xhr</code>实体的一系列方法和属性</p>
+<h4 id="所监听的事件"><a href="#所监听的事件" class="headerlink" title="所监听的事件"></a>所监听的事件</h4><h5 id="onabort"><a href="#onabort" class="headerlink" title="onabort"></a>onabort</h5><p>Ajax请求被强制终止了所触发的事件</p>
+<h5 id="onerror"><a href="#onerror" class="headerlink" title="onerror"></a>onerror</h5><p>Ajax请求错误了所触发的事件</p>
+<h5 id="onload"><a href="#onload" class="headerlink" title="onload"></a>onload</h5><p>Ajax请求加载触发的事件</p>
+<h5 id="onloadend"><a href="#onloadend" class="headerlink" title="onloadend"></a>onloadend</h5><p>Ajax请求加载完成触发的事件</p>
+<h5 id="onloadstart"><a href="#onloadstart" class="headerlink" title="onloadstart"></a>onloadstart</h5><p>Ajax请求开始加载触发的事件</p>
+<h5 id="onprogress"><a href="#onprogress" class="headerlink" title="onprogress"></a>onprogress</h5><p>Ajax请求加载中触发的事件</p>
+<h5 id="onreadystatechange"><a href="#onreadystatechange" class="headerlink" title="onreadystatechange"></a>onreadystatechange</h5><p>Ajax请求状态发送改变时触发的事件</p>
+<h5 id="ontimeout"><a href="#ontimeout" class="headerlink" title="ontimeout"></a>ontimeout</h5><p>Ajax请求超时时触发的事件</p>
+<h4 id="一般属性"><a href="#一般属性" class="headerlink" title="一般属性"></a>一般属性</h4><h5 id="readyState"><a href="#readyState" class="headerlink" title="readyState"></a>readyState</h5><p>状态码</p>
+<h5 id="response"><a href="#response" class="headerlink" title="response"></a>response</h5><p>响应主体</p>
+<h5 id="responseText"><a href="#responseText" class="headerlink" title="responseText"></a>responseText</h5><p>响应主体的内容是字符串（JSON或者XML格式字符串都可以）</p>
+<h5 id="responseType"><a href="#responseType" class="headerlink" title="responseType"></a>responseType</h5><p>响应主体内容的类型</p>
+<h5 id="responseURL"><a href="#responseURL" class="headerlink" title="responseURL"></a>responseURL</h5><p>响应的url</p>
+<h5 id="responseXML"><a href="#responseXML" class="headerlink" title="responseXML"></a>responseXML</h5><p>响应主体的内容是XML文档</p>
+<h5 id="status"><a href="#status" class="headerlink" title="status"></a>status</h5><p>HTTP状态码</p>
+<h5 id="statusText"><a href="#statusText" class="headerlink" title="statusText"></a>statusText</h5><p>状态码的描述</p>
+<h5 id="timeout"><a href="#timeout" class="headerlink" title="timeout"></a>timeout</h5><p>设置请求超时的时间</p>
+<h5 id="withCredentials"><a href="#withCredentials" class="headerlink" title="withCredentials"></a>withCredentials</h5><p>是否允许跨域</p>
+<h3 id="7个方法"><a href="#7个方法" class="headerlink" title="7个方法"></a>7个方法</h3><p>打开xhr实体的最后一项<code>__proto__</code>,底下的属性凡是带有<code>f</code>的都是方法</p>
+<h4 id="xhr-abort"><a href="#xhr-abort" class="headerlink" title="xhr.abort()"></a>xhr.abort()</h4><p>强制中断AJAX请求,一般在请求超时的时候调用,再调用中断事件</p>
+<h4 id="xhr-getAllResponseHeaders"><a href="#xhr-getAllResponseHeaders" class="headerlink" title="xhr.getAllResponseHeaders()"></a>xhr.getAllResponseHeaders()</h4><p>获取所有响应头信息</p>
+<h4 id="xhr-getResponseHeader-key"><a href="#xhr-getResponseHeader-key" class="headerlink" title="xhr.getResponseHeader([key])"></a>xhr.getResponseHeader([key])</h4><p>获取KEY对应的响应头信息<br>例如：<code>xhr.getResponseHeader(&#39;date&#39;)</code>就是在获取响应有中的服务器时间</p>
+<h4 id="xhr-open"><a href="#xhr-open" class="headerlink" title="xhr.open()"></a>xhr.open()</h4><p>打开URL请求</p>
+<h4 id="xhr-overrideMimeType"><a href="#xhr-overrideMimeType" class="headerlink" title="xhr.overrideMimeType()"></a>xhr.overrideMimeType()</h4><p>重写MIME类型,很少用</p>
+<h4 id="xhr-send"><a href="#xhr-send" class="headerlink" title="xhr.send()"></a>xhr.send()</h4><p>发送AJAX请求</p>
+<h4 id="xhr-setRequestHeader"><a href="#xhr-setRequestHeader" class="headerlink" title="xhr.setRequestHeader()"></a>xhr.setRequestHeader()</h4><p>设置请求头</p>
+<blockquote class="blockquote-center"><p><strong>珠峰培训视频总结</strong><br>讲师<cite>周啸天</cite><br><a href="http://www.zhufengpeixun.cn/" target="_blank"><small>珠峰培训</small></a> </p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------This article is over-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    <div>
+          
+            
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/02/22/AJAX基础05-AJAX调用及其参数/">AJAX基础05-AJAX调用及其参数</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Fidel Yiu 的个人博客">Fidel Yiu</a></p>
+  <p><span>发布时间:</span>2019年02月22日 - 19:02</p>
+  <p><span>最后更新:</span>2019年03月02日 - 15:03</p>
+  <p><span>原始链接:</span><a href="/2019/02/22/AJAX基础05-AJAX调用及其参数/" title="AJAX基础05-AJAX调用及其参数">https://vxiaoxin.github.io/2019/02/22/AJAX基础05-AJAX调用及其参数/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://vxiaoxin.github.io/2019/02/22/AJAX基础05-AJAX调用及其参数/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+    });
+    });
+</script>
+
+
+          
+    </div>
+
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AJAX/" rel="tag"><i class="fa fa-tag"></i> AJAX</a>
+          
+            <a href="/tags/异步处理/" rel="tag"><i class="fa fa-tag"></i> 异步处理</a>
+          
+            <a href="/tags/前端/" rel="tag"><i class="fa fa-tag"></i> 前端</a>
+          
+            <a href="/tags/基础/" rel="tag"><i class="fa fa-tag"></i> 基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/22/致英子的情书1/" rel="next" title="致英子的情书1">
+                <i class="fa fa-chevron-left"></i> 致英子的情书1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/23/AJAX基础06-AJAX运行机制/" rel="prev" title="AJAX基础06-AJAX运行机制">
+                AJAX基础06-AJAX运行机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/feidao-logo.jpg" alt="Fidel Yiu">
+            
+              <p class="site-author-name" itemprop="name">Fidel Yiu</p>
+              <p class="site-description motion-element" itemprop="description">大悲大喜过后,我还曾渴望过什么呢?<br>看着夕阳傻笑,看着霓虹灯落寞.<br>可我还有梦想呀,你一定要加油.<br>一直努力!</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/VXiaoXin" title="GitHub &rarr; https://github.com/VXiaoXin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://gitee.com/" title="码云 &rarr; https://gitee.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>码云</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://blog.fangshuoit.com/" title="方硕公司博客 &rarr; http://blog.fangshuoit.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-graduation-cap"></i>方硕公司博客</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://gank.io/" title="干货小博客 &rarr; https://gank.io/" rel="noopener" target="_blank"><i class="fa fa-fw fa-graduation-cap"></i>干货小博客</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.xd0.com/" title="小刀资源 &rarr; https://www.xd0.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-flash"></i>小刀资源</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.kxdao.net/" title="科学刀 &rarr; https://www.kxdao.net/" rel="noopener" target="_blank"><i class="fa fa-fw fa-flash"></i>科学刀</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://cloud.tencent.com/developer/labs/gallery" title="云实验室 &rarr; https://cloud.tencent.com/developer/labs/gallery" rel="noopener" target="_blank"><i class="fa fa-fw fa-flash"></i>云实验室</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.sojson.com/ip/" title="IP查询 &rarr; https://www.sojson.com/ip/" rel="noopener" target="_blank"><i class="fa fa-fw fa-flash"></i>IP查询</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.baidu.com/" title="百度 &rarr; https://www.baidu.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-paw"></i>百度</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://fanyi.baidu.com/?aldtype=16047#auto/zh" title="百度翻译 &rarr; https://fanyi.baidu.com/?aldtype=16047#auto/zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-language"></i>百度翻译</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.processon.com/" title="Process On &rarr; https://www.processon.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-object-ungroup"></i>Process On</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://msdn.itellyou.cn/" title="系统下载 &rarr; https://msdn.itellyou.cn/" rel="noopener" target="_blank"><i class="fa fa-fw fa-file-archive-o"></i>系统下载</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.bilibili.com/" title="B站 &rarr; https://www.bilibili.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>B站</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.heimidy.cc/index.html" title="黑米影院 &rarr; https://www.heimidy.cc/index.html" rel="noopener" target="_blank"><i class="fa fa-fw fa-video-camera"></i>黑米影院</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://doc.vue-js.com/" title="Vue &rarr; http://doc.vue-js.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>Vue</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://youzan.github.io/vant/#/zh-CN/intro" title="Vant &rarr; https://youzan.github.io/vant/#/zh-CN/intro" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>Vant</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.iviewui.com/" title="iview &rarr; https://www.iviewui.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>iview</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://admin.iviewui.com/login" title="iview-admin &rarr; https://admin.iviewui.com/login" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>iview-admin</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.iconfont.cn/" title="阿里矢量图库 &rarr; https://www.iconfont.cn/" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>阿里矢量图库</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://fontawesome.dashgame.com/" title="Font Awesome &rarr; http://fontawesome.dashgame.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>Font Awesome</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://so.uigreat.com/" title="UI设计师导航 &rarr; http://so.uigreat.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>UI设计师导航</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://dribbble.com/" title="Dribbble &rarr; https://dribbble.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>Dribbble</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://streetwill.co/" title="Streetwill &rarr; http://streetwill.co/" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>Streetwill</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://wall.alphacoders.com/?lang=Chinese" title="WALLPAPER ABYSS &rarr; https://wall.alphacoders.com/?lang=Chinese" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>WALLPAPER ABYSS</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://alpha.wallhaven.cc/" title="Wallhaven &rarr; https://alpha.wallhaven.cc/" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>Wallhaven</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://unsplash.com/" title="Unsplash &rarr; https://unsplash.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>Unsplash</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.pexels.com/" title="Pexels &rarr; https://www.pexels.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>Pexels</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://weavesilk.com/" title="WeaveSilk &rarr; http://weavesilk.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>WeaveSilk</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.ssyer.com/home" title="沙沙兔 &rarr; https://www.ssyer.com/home" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>沙沙兔</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://www.bigbigwork.com/" title="大作 &rarr; http://www.bigbigwork.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>大作</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AJAX操作4步"><span class="nav-number">1.</span> <span class="nav-text">AJAX操作4步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建AJAX实例"><span class="nav-number">1.1.</span> <span class="nav-text">1.创建AJAX实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-打开请求"><span class="nav-number">1.2.</span> <span class="nav-text">2.打开请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-事件监听"><span class="nav-number">1.3.</span> <span class="nav-text">3.事件监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-发送AJAX请求"><span class="nav-number">1.4.</span> <span class="nav-text">4.发送AJAX请求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP请求方式-HTTP-METHOD"><span class="nav-number">2.</span> <span class="nav-text">HTTP请求方式(HTTP METHOD)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-METHOD的值"><span class="nav-number">2.1.</span> <span class="nav-text">HTTP METHOD的值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GET"><span class="nav-number">2.1.1.</span> <span class="nav-text">GET</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#POST"><span class="nav-number">2.1.2.</span> <span class="nav-text">POST</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DELETE"><span class="nav-number">2.1.3.</span> <span class="nav-text">DELETE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PUT"><span class="nav-number">2.1.4.</span> <span class="nav-text">PUT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HEAD"><span class="nav-number">2.1.5.</span> <span class="nav-text">HEAD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OPTIONS"><span class="nav-number">2.1.6.</span> <span class="nav-text">OPTIONS</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GET和POST的区别"><span class="nav-number">2.2.</span> <span class="nav-text">GET和POST的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AJAX状态-READY-STATE"><span class="nav-number">3.</span> <span class="nav-text">AJAX状态(READY-STATE)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0"><span class="nav-number">3.1.</span> <span class="nav-text">0</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1"><span class="nav-number">3.1.1.</span> <span class="nav-text">1</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2"><span class="nav-number">3.2.</span> <span class="nav-text">2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3"><span class="nav-number">3.3.</span> <span class="nav-text">3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4"><span class="nav-number">3.4.</span> <span class="nav-text">4</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP网络状态码-STATUS"><span class="nav-number">4.</span> <span class="nav-text">HTTP网络状态码(STATUS)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#成功2开头"><span class="nav-number">4.1.</span> <span class="nav-text">成功2开头</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#200"><span class="nav-number">4.1.1.</span> <span class="nav-text">200</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重定向3开头"><span class="nav-number">4.2.</span> <span class="nav-text">重定向3开头</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#301"><span class="nav-number">4.2.1.</span> <span class="nav-text">301</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#302"><span class="nav-number">4.2.2.</span> <span class="nav-text">302</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置缓存"><span class="nav-number">4.3.</span> <span class="nav-text">设置缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#304"><span class="nav-number">4.3.1.</span> <span class="nav-text">304</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求错误4开头"><span class="nav-number">4.4.</span> <span class="nav-text">请求错误4开头</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#400"><span class="nav-number">4.4.1.</span> <span class="nav-text">400</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#401"><span class="nav-number">4.4.2.</span> <span class="nav-text">401</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#404"><span class="nav-number">4.4.3.</span> <span class="nav-text">404</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#413"><span class="nav-number">4.4.4.</span> <span class="nav-text">413</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器错误5开头"><span class="nav-number">4.5.</span> <span class="nav-text">服务器错误5开头</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#500"><span class="nav-number">4.5.1.</span> <span class="nav-text">500</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#503"><span class="nav-number">4.5.2.</span> <span class="nav-text">503</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于XHR的属性和方法"><span class="nav-number">5.</span> <span class="nav-text">关于XHR的属性和方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性"><span class="nav-number">5.1.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#所监听的事件"><span class="nav-number">5.1.1.</span> <span class="nav-text">所监听的事件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#onabort"><span class="nav-number">5.1.1.1.</span> <span class="nav-text">onabort</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#onerror"><span class="nav-number">5.1.1.2.</span> <span class="nav-text">onerror</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#onload"><span class="nav-number">5.1.1.3.</span> <span class="nav-text">onload</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#onloadend"><span class="nav-number">5.1.1.4.</span> <span class="nav-text">onloadend</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#onloadstart"><span class="nav-number">5.1.1.5.</span> <span class="nav-text">onloadstart</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#onprogress"><span class="nav-number">5.1.1.6.</span> <span class="nav-text">onprogress</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#onreadystatechange"><span class="nav-number">5.1.1.7.</span> <span class="nav-text">onreadystatechange</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ontimeout"><span class="nav-number">5.1.1.8.</span> <span class="nav-text">ontimeout</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一般属性"><span class="nav-number">5.1.2.</span> <span class="nav-text">一般属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#readyState"><span class="nav-number">5.1.2.1.</span> <span class="nav-text">readyState</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#response"><span class="nav-number">5.1.2.2.</span> <span class="nav-text">response</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#responseText"><span class="nav-number">5.1.2.3.</span> <span class="nav-text">responseText</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#responseType"><span class="nav-number">5.1.2.4.</span> <span class="nav-text">responseType</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#responseURL"><span class="nav-number">5.1.2.5.</span> <span class="nav-text">responseURL</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#responseXML"><span class="nav-number">5.1.2.6.</span> <span class="nav-text">responseXML</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#status"><span class="nav-number">5.1.2.7.</span> <span class="nav-text">status</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#statusText"><span class="nav-number">5.1.2.8.</span> <span class="nav-text">statusText</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#timeout"><span class="nav-number">5.1.2.9.</span> <span class="nav-text">timeout</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#withCredentials"><span class="nav-number">5.1.2.10.</span> <span class="nav-text">withCredentials</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7个方法"><span class="nav-number">5.2.</span> <span class="nav-text">7个方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#xhr-abort"><span class="nav-number">5.2.1.</span> <span class="nav-text">xhr.abort()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xhr-getAllResponseHeaders"><span class="nav-number">5.2.2.</span> <span class="nav-text">xhr.getAllResponseHeaders()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xhr-getResponseHeader-key"><span class="nav-number">5.2.3.</span> <span class="nav-text">xhr.getResponseHeader([key])</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xhr-open"><span class="nav-number">5.2.4.</span> <span class="nav-text">xhr.open()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xhr-overrideMimeType"><span class="nav-number">5.2.5.</span> <span class="nav-text">xhr.overrideMimeType()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xhr-send"><span class="nav-number">5.2.6.</span> <span class="nav-text">xhr.send()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xhr-setRequestHeader"><span class="nav-number">5.2.7.</span> <span class="nav-text">xhr.setRequestHeader()</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+
+  <span class="post-meta-divider">|</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fidel Yiu</span>
+
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+    <div class="powered-by"></div>
+    <span class="post-count">博客全站共67.6k字</span>
+  </div>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      你是第<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>位访客
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=66179865";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'cpXAhhUV7pHMnxNo6HWTcDYP-gzGzoHsz',
+    appKey: 'xPdyQq7iGeJDUKMSYw9NJEzN',
+    placeholder: '评论不常管理,可以发表发表你的看法',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>

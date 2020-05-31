@@ -1,0 +1,2322 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这是前端工程师完全分离后端的神器,之后还有EasyMock">
+<meta name="keywords" content="前端,Mock.js,分离后端,模拟数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mock分离后端">
+<meta property="og:url" content="https://vxiaoxin.github.io/2019/02/28/Mock分离后端/index.html">
+<meta property="og:site_name" content="鱼非道-技术博客">
+<meta property="og:description" content="这是前端工程师完全分离后端的神器,之后还有EasyMock">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://vxiaoxin.github.io/2019/02/28/Mock分离后端/Mock.png">
+<meta property="og:updated_time" content="2019-03-02T07:27:18.147Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mock分离后端">
+<meta name="twitter:description" content="这是前端工程师完全分离后端的神器,之后还有EasyMock">
+<meta name="twitter:image" content="https://vxiaoxin.github.io/2019/02/28/Mock分离后端/Mock.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://vxiaoxin.github.io/2019/02/28/Mock分离后端/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Mock分离后端 | 鱼非道-技术博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/VXiaoXin" target="_blank" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼非道-技术博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">孤客一身千里外,不知归日是何年.</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>目录</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://vxiaoxin.github.io/2019/02/28/Mock分离后端/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fidel Yiu">
+      <meta itemprop="description" content="大悲大喜过后,我还曾渴望过什么呢?<br/>看着夕阳傻笑,看着霓虹灯落寞.<br/>可我还有梦想呀,你一定要加油.<br/>一直努力!">
+      <meta itemprop="image" content="/images/feidao-logo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼非道-技术博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mock分离后端
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-28 11:37:21" itemprop="dateCreated datePublished" datetime="2019-02-28T11:37:21+08:00">2019-02-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-02 15:27:18" itemprop="dateModified" datetime="2019-03-02T15:27:18+08:00">2019-03-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/模拟数据/" itemprop="url" rel="index"><span itemprop="name">模拟数据</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/模拟数据/Mock-js/" itemprop="url" rel="index"><span itemprop="name">Mock.js</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <a href="/2019/02/28/Mock分离后端/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/02/28/Mock分离后端/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2019/02/28/Mock分离后端/Mock.png" alt><br>这是前端工程师完全分离后端的神器,之后还有EasyMock<br><a id="more"></a></p>
+<h1 id="Mockjs"><a href="#Mockjs" class="headerlink" title="Mockjs"></a>Mockjs</h1><p>Mock.js的<a href="http://mockjs.com/" target="_blank" rel="noopener">官网</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 安装</span><br><span class="line">npm install mockjs</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 Mock</span></span><br><span class="line"><span class="keyword">var</span> Mock = <span class="built_in">require</span>(<span class="string">'mockjs'</span>)</span><br><span class="line"><span class="keyword">var</span> data = Mock.mock(&#123;</span><br><span class="line">    <span class="comment">// 属性 list 的值是一个数组，其中含有 1 到 10 个元素</span></span><br><span class="line">    <span class="string">'list|1-10'</span>: [&#123;</span><br><span class="line">        <span class="comment">// 属性 id 是一个自增数，起始值为 1，每次增 1</span></span><br><span class="line">        <span class="string">'id|+1'</span>: <span class="number">1</span></span><br><span class="line">    &#125;]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 输出结果</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(data, <span class="literal">null</span>, <span class="number">4</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="Bower"><a href="#Bower" class="headerlink" title="Bower"></a>Bower</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 安装</span><br><span class="line">npm install -g bower</span><br><span class="line">bower install --save mockjs</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"./bower_components/mockjs/dist/mock.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="RequireJS-AMD"><a href="#RequireJS-AMD" class="headerlink" title="RequireJS (AMD)"></a>RequireJS (AMD)</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 配置 Mock 路径</span></span><br><span class="line"><span class="built_in">require</span>.config(&#123;</span><br><span class="line">    paths: &#123;</span><br><span class="line">        mock: <span class="string">'http://mockjs.com/dist/mock'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 加载 Mock</span></span><br><span class="line"><span class="built_in">require</span>([<span class="string">'mock'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">Mock</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 使用 Mock</span></span><br><span class="line">    <span class="keyword">var</span> data = Mock.mock(&#123;</span><br><span class="line">        <span class="string">'list|1-10'</span>: [&#123;</span><br><span class="line">            <span class="string">'id|+1'</span>: <span class="number">1</span></span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 输出结果</span></span><br><span class="line">    <span class="built_in">document</span>.body.innerHTML +=</span><br><span class="line">        <span class="string">'&lt;pre&gt;'</span> +</span><br><span class="line">        <span class="built_in">JSON</span>.stringify(data, <span class="literal">null</span>, <span class="number">4</span>) +</span><br><span class="line">        <span class="string">'&lt;/pre&gt;'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// ==&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"list"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"id"</span>: <span class="number">1</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"id"</span>: <span class="number">2</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"id"</span>: <span class="number">3</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="语法规范"><a href="#语法规范" class="headerlink" title="语法规范"></a>语法规范</h2><p>Mock.js 的语法规范包括两部分：</p>
+<ul>
+<li>数据模板定义规范（Data Template Definition，DTD）</li>
+<li>数据占位符定义规范（Data Placeholder Definition，DPD）<h3 id="数据模板定义规范-DTD"><a href="#数据模板定义规范-DTD" class="headerlink" title="数据模板定义规范 DTD"></a>数据模板定义规范 DTD</h3>数据模板中的每个属性由 3 部分构成：<code>属性名</code>、<code>生成规则</code>、<code>属性值</code>：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 属性名   name</span></span><br><span class="line"><span class="comment">// 生成规则 rule</span></span><br><span class="line"><span class="comment">// 属性值   value</span></span><br><span class="line"><span class="string">'name|rule'</span>: value</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li><code>属性名</code>和<code>生成规则</code>之间用竖线<code>|</code>分隔。</li>
+<li><code>生成规则</code>是可选的。</li>
+<li><code>生成规则</code>有 7 种格式：<ol>
+<li><code>&#39;name|min-max&#39;: value</code></li>
+<li><code>&#39;name|count&#39;: value</code></li>
+<li><code>&#39;name|min-max.dmin-dmax&#39;: value</code></li>
+<li><code>&#39;name|min-max.dcount&#39;: value</code></li>
+<li><code>&#39;name|count.dmin-dmax&#39;: value</code></li>
+<li><code>&#39;name|count.dcount&#39;: value</code></li>
+<li><code>&#39;name|+step&#39;: value</code></li>
+</ol>
+</li>
+<li><code>生成规则</code>的含义需要依赖<code>属性值</code>的类型才能确定。</li>
+<li><code>属性值</code>中可以含有<code>@</code>占位符。</li>
+<li><code>属性值</code>还指定了最终值的初始值和类型。<h4 id="生成规则和示例："><a href="#生成规则和示例：" class="headerlink" title="生成规则和示例："></a>生成规则和示例：</h4></li>
+</ul>
+<h5 id="String"><a href="#String" class="headerlink" title="String"></a>String</h5><ol>
+<li><code>&#39;name|min-max&#39;: string</code><br>通过重复 string 生成一个字符串，重复次数大于等于 min，小于等于 max。</li>
+<li><code>&#39;name|count&#39;: string</code><br>通过重复 string 生成一个字符串，重复次数等于 count。</li>
+</ol>
+<h5 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h5><ol>
+<li><p><code>&#39;name|+1&#39;: number</code><br>属性值自动加 1，初始值为 number。</p>
+</li>
+<li><p><code>&#39;name|min-max&#39;: number</code><br>生成一个大于等于 min、小于等于 max 的整数，属性值 number 只是用来确定类型。</p>
+</li>
+<li><code>&#39;name|min-max.dmin-dmax&#39;: number</code><br>生成一个浮点数，整数部分大于等于 min、小于等于 max，小数部分保留 dmin 到 dmax 位。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Mock.mock(&#123;</span><br><span class="line">    <span class="string">'number1|1-100.1-10'</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">'number2|123.1-10'</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">'number3|123.3'</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">'number4|123.10'</span>: <span class="number">1.123</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"number1"</span>: <span class="number">12.92</span>,</span><br><span class="line">    <span class="attr">"number2"</span>: <span class="number">123.51</span>,</span><br><span class="line">    <span class="attr">"number3"</span>: <span class="number">123.777</span>,</span><br><span class="line">    <span class="attr">"number4"</span>: <span class="number">123.1231091814</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回格</p>
+<h5 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean"></a>Boolean</h5><ol>
+<li><code>&#39;name|1&#39;: boolean</code><br>随机生成一个布尔值，值为 true 的概率是 1/2，值为 false 的概率同样是 1/2。</li>
+<li><code>&#39;name|min-max&#39;: value</code><br>随机生成一个布尔值，值为 value 的概率是 min / (min + max)，值为 !value 的概率是 max / (min + max)。</li>
+</ol>
+<h5 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h5><ol>
+<li><code>&#39;name|count&#39;: object</code><br>从属性值 object 中随机选取 count 个属性。</li>
+<li><code>&#39;name|min-max&#39;: object</code><br>从属性值 object 中随机选取 min 到 max 个属性。</li>
+</ol>
+<h5 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h5><ol>
+<li><code>&#39;name|1&#39;: array</code><br>从属性值 array 中随机选取 1 个元素，作为最终值。</li>
+<li><code>&#39;name|+1&#39;: array</code><br>从属性值 array 中顺序选取 1 个元素，作为最终值。</li>
+<li><code>&#39;name|min-max&#39;: array</code><br>通过重复属性值 array 生成一个新数组，重复次数大于等于 min，小于等于 max。</li>
+<li><code>&#39;name|count&#39;: array</code><br>通过重复属性值 array 生成一个新数组，重复次数为 count。</li>
+</ol>
+<h5 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h5><ol>
+<li><code>&#39;name&#39;: function</code><br>执行函数 function，取其返回值作为最终的属性值，函数的上下文为属性 ‘name’ 所在的对象。</li>
+</ol>
+<h5 id="RegExp"><a href="#RegExp" class="headerlink" title="RegExp"></a>RegExp</h5><ol>
+<li><code>&#39;name&#39;: regexp</code><br>根据正则表达式 regexp 反向生成可以匹配它的字符串。用于生成自定义格式的字符串。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Mock.mock(&#123;</span><br><span class="line">    <span class="string">'regexp1'</span>: <span class="regexp">/[a-z][A-Z][0-9]/</span>,</span><br><span class="line">    <span class="string">'regexp2'</span>: <span class="regexp">/\w\W\s\S\d\D/</span>,</span><br><span class="line">    <span class="string">'regexp3'</span>: <span class="regexp">/\d&#123;5,10&#125;/</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"regexp1"</span>: <span class="string">"pJ7"</span>,</span><br><span class="line">    <span class="attr">"regexp2"</span>: <span class="string">"F)\fp1G"</span>,</span><br><span class="line">    <span class="attr">"regexp3"</span>: <span class="string">"561659409"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="数据占位符定义规范-DPD"><a href="#数据占位符定义规范-DPD" class="headerlink" title="数据占位符定义规范 DPD"></a>数据占位符定义规范 DPD</h3><p><code>占位符</code>只是在<code>属性值</code>字符串中占个位置，并不出现在最终的属性值中。</p>
+<p><code>占位符</code>的格式为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@占位符</span><br><span class="line">@占位符(参数 [, 参数])</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意</strong>：<br>用<code>@</code>来标识其后的字符串是<code>占位符</code>。<br><code>占位符</code>引用的是Mock.Random中的方法。<br>通过Mock.Random.extend()来扩展自定义占位符。<br><code>占位符</code>也可以引用<code>数据模板</code>中的<code>属性</code>。<br><code>占位符</code>会优先引用<code>数据模板</code>中的<code>属性</code>。<br><code>占位符</code>支持<code>相对路径</code>和<code>绝对路径</code>。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Mock.mock(&#123;</span><br><span class="line">    name: &#123;</span><br><span class="line">        first: <span class="string">'@FIRST'</span>,</span><br><span class="line">        middle: <span class="string">'@FIRST'</span>,</span><br><span class="line">        last: <span class="string">'@LAST'</span>,</span><br><span class="line">        full: <span class="string">'@first @middle @last'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: &#123;</span><br><span class="line">        <span class="attr">"first"</span>: <span class="string">"Charles"</span>,</span><br><span class="line">        <span class="attr">"middle"</span>: <span class="string">"Brenda"</span>,</span><br><span class="line">        <span class="attr">"last"</span>: <span class="string">"Lopez"</span>,</span><br><span class="line">        <span class="attr">"full"</span>: <span class="string">"Charles Brenda Lopez"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Mock-mock"><a href="#Mock-mock" class="headerlink" title="Mock.mock()"></a>Mock.mock()</h1><p><code>Mock-mock()</code><br>Mock实例的mock方法的参数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mock.mock( rurl?, rtype?, template|<span class="function"><span class="keyword">function</span>(<span class="params"> options </span>) )</span></span><br></pre></td></tr></table></figure></p>
+<p>作用:根据数据模板生成模拟数据。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ul>
+<li><p><code>Mock.mock( template )</code><br>根据数据模板生成模拟数据。</p>
+</li>
+<li><p><code>Mock.mock( rurl, template )</code><br>记录数据模板。当拦截到匹配 rurl 的 Ajax 请求时，将根据数据模板 template 生成模拟数据，并作为响应数据返回。</p>
+</li>
+<li><p><code>Mock.mock( rurl, function( options ) )</code><br>记录用于生成响应数据的函数。当拦截到匹配 rurl 的 Ajax 请求时，函数 function(options) 将被执行，并把执行结果作为响应数据返回。</p>
+</li>
+<li><p><code>Mock.mock( rurl, rtype, template )</code><br>记录数据模板。当拦截到匹配 rurl 和 rtype 的 Ajax 请求时，将根据数据模板 template 生成模拟数据，并作为响应数据返回。</p>
+</li>
+<li><p><code>Mock.mock( rurl, rtype, function( options ) )</code><br>记录用于生成响应数据的函数。当拦截到匹配 rurl 和 rtype 的 Ajax 请求时，函数 function(options) 将被执行，并把执行结果作为响应数据返回。</p>
+</li>
+</ul>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><ul>
+<li><p><code>rurl</code><br>可选。<br>表示需要拦截的 URL，可以是 URL 字符串或 URL 正则。例如 /\/domain\/list.json/、’/domian/list.json’。</p>
+</li>
+<li><p><code>rtype</code><br>可选。<br>表示需要拦截的 Ajax 请求类型。例如 GET、POST、PUT、DELETE 等。</p>
+</li>
+<li><p><code>template</code><br>可选。<br>表示数据模板，可以是对象或字符串。例如 { ‘data|1-10’:[{}] }、‘@EMAIL’。</p>
+</li>
+<li><p><code>function(options)</code><br>可选。<br>表示用于生成响应数据的函数。  </p>
+</li>
+<li><p><code>options</code><br>指向本次请求的 Ajax 选项集，含有 url、type 和 body 三个属性，参见 XMLHttpRequest 规范。</p>
+</li>
+</ul>
+<h1 id="Mock-setup"><a href="#Mock-setup" class="headerlink" title="Mock.setup()"></a>Mock.setup()</h1><p><code>Mock.setup( settings )</code><br>配置拦截 Ajax 请求时的行为。支持的配置项有：timeout。</p>
+<h2 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h2><ul>
+<li><p><code>settings</code><br>必选。<br>配置项集合。  </p>
+</li>
+<li><p><code>timeout</code><br>可选。<br>指定被拦截的 Ajax 请求的响应时间，单位是毫秒。值可以是正整数，例如 400，表示 400 毫秒 后才会返回响应内容；也可以是横杠 ‘-‘ 风格的字符串，例如 ‘200-600’，表示响应时间介于 200 和 600 毫秒之间。默认值是’10-100’。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Mock.setup(&#123;</span><br><span class="line">    timeout: <span class="number">400</span></span><br><span class="line">&#125;)</span><br><span class="line">Mock.setup(&#123;</span><br><span class="line">    timeout: <span class="string">'200-600'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>目前，接口 Mock.setup( settings ) 仅用于配置 Ajax 请求，将来可能用于配置 Mock 的其他行为。</p>
+<h1 id="Mock-Random"><a href="#Mock-Random" class="headerlink" title="Mock.Random"></a>Mock.Random</h1><p>Mock.Random 是一个工具类，用于生成各种随机数据。<br><strong>Mock.Random的方法在数据模板中称为『占位符』，书写格式为 <code>@占位符(参数 [, 参数])</code></strong>。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Random = Mock.Random</span><br><span class="line">Random.email()</span><br><span class="line"><span class="comment">// =&gt; "n.clark@miller.io"</span></span><br><span class="line">Mock.mock(<span class="string">'@email'</span>)</span><br><span class="line"><span class="comment">// =&gt; "y.lee@lewis.org"</span></span><br><span class="line">Mock.mock( &#123; <span class="attr">email</span>: <span class="string">'@email'</span> &#125; )</span><br><span class="line"><span class="comment">// =&gt; &#123; email: "v.lewis@hall.gov" &#125;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>Mock.Random 提供的完整方法（占位符）如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Basic</td>
+<td style="text-align:left">boolean, natural, integer, float, character, string, range, date, time, datetime, now</td>
+</tr>
+<tr>
+<td style="text-align:left">Image</td>
+<td style="text-align:left">image, dataImage</td>
+</tr>
+<tr>
+<td style="text-align:left">Color</td>
+<td style="text-align:left">color</td>
+</tr>
+<tr>
+<td style="text-align:left">Text</td>
+<td style="text-align:left">paragraph, sentence, word, title, cparagraph, csentence, cword, ctitle</td>
+</tr>
+<tr>
+<td style="text-align:left">Name</td>
+<td style="text-align:left">first, last, name, cfirst, clast, cname</td>
+</tr>
+<tr>
+<td style="text-align:left">Web</td>
+<td style="text-align:left">url, domain, email, ip, tld</td>
+</tr>
+<tr>
+<td style="text-align:left">Address</td>
+<td style="text-align:left">area, region</td>
+</tr>
+<tr>
+<td style="text-align:left">Helper</td>
+<td style="text-align:left">capitalize, upper, lower, pick, shuffle</td>
+</tr>
+<tr>
+<td style="text-align:left">Miscellaneous</td>
+<td style="text-align:left">guid, id</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"fixPlaceholderLink"</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"> </span></span><br><span class="line"><span class="javascript">    $(<span class="string">'#fixPlaceholderLink'</span>)</span></span><br><span class="line"><span class="javascript">        .prev(<span class="string">'table'</span>) </span></span><br><span class="line"><span class="javascript">        .find(<span class="string">'td:nth-child(1)'</span>)</span></span><br><span class="line"><span class="javascript">        .each(<span class="function"><span class="keyword">function</span>(<span class="params">index, td</span>) </span></span></span><br><span class="line"><span class="undefined">    &#123;</span></span><br><span class="line"><span class="javascript">        $(td).contents()</span></span><br><span class="line"><span class="javascript">            .wrapAll( $(<span class="string">''</span>)</span></span><br><span class="line"><span class="javascript">            .attr(<span class="string">'href'</span>, <span class="string">'#'</span> + $(td).text()) ) &#125;) </span></span><br><span class="line"><span class="undefined">            .end() </span></span><br><span class="line"><span class="javascript">            .find(<span class="string">'td:nth-child(2)'</span>)</span></span><br><span class="line"><span class="javascript">            .each(<span class="function"><span class="keyword">function</span>(<span class="params">index, td</span>) </span></span></span><br><span class="line"><span class="undefined">        &#123; </span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> methods = $(td).text().split(<span class="string">' '</span>)</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> links = $() </span></span><br><span class="line"><span class="javascript">            $(methods).each(<span class="function"><span class="keyword">function</span>(<span class="params">mindex, m</span>) </span>&#123; </span></span><br><span class="line"><span class="javascript">                links.push( $(<span class="string">''</span>).attr(<span class="string">'href'</span>, <span class="string">'#'</span> + m).text(m)[<span class="number">0</span>] ) </span></span><br><span class="line"><span class="javascript">                <span class="keyword">if</span> (mindex &lt; methods.length - <span class="number">1</span>) &#123;</span></span><br><span class="line"><span class="javascript">                    links.push( $(<span class="string">''</span>).text(<span class="string">', '</span>)[<span class="number">0</span>] ) </span></span><br><span class="line"><span class="undefined">                &#125; </span></span><br><span class="line"><span class="undefined">            &#125;) </span></span><br><span class="line"><span class="javascript">            $(td).empty().append(links) &#125;) .end() </span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p>Mock.Random 中的方法与数据模板的<code>@</code>占位符 一一对应，在需要时还可以为 Mock.Random 扩展方法，然后在数据模板中通过 @扩展方法 引用。例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Random.extend(&#123;</span><br><span class="line">    constellation: <span class="function"><span class="keyword">function</span>(<span class="params">date</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> constellations = [</span><br><span class="line">            <span class="string">'白羊座'</span>, <span class="string">'金牛座'</span>, <span class="string">'双子座'</span>, </span><br><span class="line">            <span class="string">'巨蟹座'</span>, <span class="string">'狮子座'</span>, <span class="string">'处女座'</span>, </span><br><span class="line">            <span class="string">'天秤座'</span>, <span class="string">'天蝎座'</span>, <span class="string">'射手座'</span>, </span><br><span class="line">            <span class="string">'摩羯座'</span>, <span class="string">'水瓶座'</span>, <span class="string">'双鱼座'</span>]</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.pick(constellations)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">Random.constellation()</span><br><span class="line"><span class="comment">// =&gt; "水瓶座"</span></span><br><span class="line">Mock.mock(<span class="string">'@CONSTELLATION'</span>)</span><br><span class="line"><span class="comment">// =&gt; "天蝎座"</span></span><br><span class="line">Mock.mock(&#123;</span><br><span class="line">    constellation: <span class="string">'@CONSTELLATION'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// =&gt; </span><br><span class="line">&#123; </span><br><span class="line">  constellation: "射手座"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="各种数据"><a href="#各种数据" class="headerlink" title="各种数据"></a>各种数据</h1><h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><h3 id="随机布值"><a href="#随机布值" class="headerlink" title="随机布值"></a>随机布值</h3><p><code>Random.boolean( min?, max?, current? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.boolean()</span><br><span class="line">Random.boolean( min, max, current )</span><br></pre></td></tr></table></figure></p>
+<p>返回一个随机的布尔值。</p>
+<h4 id="参数-2"><a href="#参数-2" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>min</code><br>可选。<br>指示参数 current 出现的概率。概率计算公式为 min / (min + max)。该参数的默认值为 1，即有 50% 的概率返回参数 current。</li>
+<li><code>max</code><br>可选。<br>指示参数 current 的相反值 !current 出现的概率。概率计算公式为 max / (min + max)。该参数的默认值为 1，即有 50% 的概率返回参数 !current。</li>
+<li><code>current</code><br>可选。<br>可选值为布尔值 true 或 false。如果未传入任何参数，则返回 true 和 false 的概率各为 50%。该参数没有默认值。在该方法的内部，依据原生方法 Math.random() 返回的（浮点）数来计算和返回布尔值，例如在最简单的情况下，返回值是表达式 Math.random() &gt;= 0.5 的执行结果。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Random.boolean()</span><br><span class="line"><span class="comment">// =&gt; true</span></span><br><span class="line">Random.boolean(<span class="number">1</span>, <span class="number">9</span>, <span class="literal">true</span>)</span><br><span class="line"><span class="comment">// =&gt; false</span></span><br><span class="line">Random.bool()</span><br><span class="line"><span class="comment">// =&gt; false</span></span><br><span class="line">Random.bool(<span class="number">1</span>, <span class="number">9</span>, <span class="literal">false</span>)</span><br><span class="line"><span class="comment">// =&gt; true</span></span><br></pre></td></tr></table></figure>
+<h3 id="随机自然数"><a href="#随机自然数" class="headerlink" title="随机自然数"></a>随机自然数</h3><p><code>Random.natural( min?, max? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Random.natural()</span><br><span class="line">Random.natural( min )</span><br><span class="line">Random.natural( min, max )</span><br></pre></td></tr></table></figure></p>
+<p>返回一个随机的自然数（大于等于 0 的整数）。</p>
+<h4 id="参数-3"><a href="#参数-3" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><p><code>min</code><br>可选。<br>指示随机自然数的最小值。默认值为 0。</p>
+</li>
+<li><p><code>max</code><br>可选。<br>指示随机自然数的最大值。默认值为 9007199254740992。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Random.natural()</span><br><span class="line"><span class="comment">// =&gt; 1002794054057984</span></span><br><span class="line">Random.natural(<span class="number">10000</span>)</span><br><span class="line"><span class="comment">// =&gt; 71529071126209</span></span><br><span class="line">Random.natural(<span class="number">60</span>, <span class="number">100</span>)</span><br><span class="line"><span class="comment">// =&gt; 77</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="随机整数"><a href="#随机整数" class="headerlink" title="随机整数"></a>随机整数</h3><p><code>Random.integer( min?, max? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Random.integer()</span><br><span class="line">Random.integer( min )</span><br><span class="line">Random.integer( min, max )</span><br></pre></td></tr></table></figure></p>
+<p>返回一个随机的整数。</p>
+<h4 id="参数-4"><a href="#参数-4" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>min</code><br>可选。<br>指示随机整数的最小值。默认值为 -9007199254740992。</li>
+<li><code>max</code><br>可选。<br>指示随机整数的最大值。默认值为 9007199254740992。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Random.integer()</span><br><span class="line"><span class="comment">// =&gt; -3815311811805184</span></span><br><span class="line">Random.integer(<span class="number">10000</span>)</span><br><span class="line"><span class="comment">// =&gt; 4303764511003750</span></span><br><span class="line">Random.integer(<span class="number">60</span>,<span class="number">100</span>)</span><br><span class="line"><span class="comment">// =&gt; 96</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="随机浮点数"><a href="#随机浮点数" class="headerlink" title="随机浮点数"></a>随机浮点数</h3><p><code>Random.float( min?, max?, dmin?, dmax? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Random.float()</span><br><span class="line">Random.float( min )</span><br><span class="line">Random.float( min, max )</span><br><span class="line">Random.float( min, max, dmin )</span><br><span class="line">Random.float( min, max, dmin, dmax )</span><br></pre></td></tr></table></figure></p>
+<p>返回一个随机的浮点数。</p>
+<h4 id="参数-5"><a href="#参数-5" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>min</code><br>可选。<br>整数部分的最小值。默认值为 -9007199254740992。</li>
+<li><code>max</code><br>可选。<br>整数部分的最大值。默认值为 9007199254740992。</li>
+<li><code>dmin</code><br>可选。<br>小数部分位数的最小值。默认值为 0。</li>
+<li><code>dmax</code><br>可选。<br>小数部分位数的最大值。默认值为 17。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Random.float()</span><br><span class="line"><span class="comment">// =&gt; -1766114241544192.8</span></span><br><span class="line">Random.float(<span class="number">0</span>)</span><br><span class="line"><span class="comment">// =&gt; 556530504040448.25</span></span><br><span class="line">Random.float(<span class="number">60</span>, <span class="number">100</span>)</span><br><span class="line"><span class="comment">// =&gt; 82.56779679549358</span></span><br><span class="line">Random.float(<span class="number">60</span>, <span class="number">100</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">// =&gt; 61.718533677927894</span></span><br><span class="line">Random.float(<span class="number">60</span>, <span class="number">100</span>, <span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line"><span class="comment">// =&gt; 70.6849</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="随机字符"><a href="#随机字符" class="headerlink" title="随机字符"></a>随机字符</h3><p><code>Random.character( pool? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Random.character()</span><br><span class="line">Random.character( <span class="string">'lower/upper/number/symbol'</span> )</span><br><span class="line">Random.character( pool )</span><br></pre></td></tr></table></figure></p>
+<p>返回一个随机字符。</p>
+<h4 id="参数-6"><a href="#参数-6" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>pool</code><br>可选。<br>字符串。表示字符池，将从中选择一个字符返回。<br>如果传入了 <code>&#39;lower&#39;</code> 或 <code>&#39;upper&#39;</code>、<code>&#39;number&#39;</code>、<code>&#39;symbol&#39;</code>，表示从内置的字符池从选取：<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    lower: "abcdefghijklmnopqrstuvwxyz",</span><br><span class="line">    upper: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",</span><br><span class="line">    number: "0123456789",</span><br><span class="line">    symbol: "!@#$%^&amp;*()[]"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果未传入该参数，则从 <code>lower + upper + number + symbol</code> 中随机选取一个字符返回。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Random.character()</span><br><span class="line"><span class="comment">// =&gt; "P"</span></span><br><span class="line">Random.character(<span class="string">'lower'</span>)</span><br><span class="line"><span class="comment">// =&gt; "y"</span></span><br><span class="line">Random.character(<span class="string">'upper'</span>)</span><br><span class="line"><span class="comment">// =&gt; "X"</span></span><br><span class="line">Random.character(<span class="string">'number'</span>)</span><br><span class="line"><span class="comment">// =&gt; "1"</span></span><br><span class="line">Random.character(<span class="string">'symbol'</span>)</span><br><span class="line"><span class="comment">// =&gt; "&amp;"</span></span><br><span class="line">Random.character(<span class="string">'aeiou'</span>)</span><br><span class="line"><span class="comment">// =&gt; "u"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="随机字符串"><a href="#随机字符串" class="headerlink" title="随机字符串"></a>随机字符串</h3><p><code>Random.string( pool?, min?, max? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Random.string()</span><br><span class="line">Random.string( length )</span><br><span class="line">Random.string( pool, length )</span><br><span class="line">Random.string( min, max )</span><br><span class="line">Random.string( pool, min, max )</span><br></pre></td></tr></table></figure></p>
+<p>返回一个随机字符串。</p>
+<h4 id="参数-7"><a href="#参数-7" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>pool</code><br>可选。<br>字符串。表示字符池，将从中选择一个字符返回。<br>如果传入 <code>&#39;lower&#39;</code> 或 <code>&#39;upper&#39;</code>、<code>&#39;number&#39;</code>、<code>&#39;symbol&#39;</code>，表示从内置的字符池从选取：<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    lower: "abcdefghijklmnopqrstuvwxyz",</span><br><span class="line">    upper: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",</span><br><span class="line">    number: "0123456789",</span><br><span class="line">    symbol: "!@#$%^&amp;*()[]"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果未传入该参数，则从 <code>lower + upper + number + symbol</code> 中随机选取一个字符返回。</p>
+<ul>
+<li><code>min</code><br>可选。<br>随机字符串的最小长度。默认值为 3。</li>
+<li><code>max</code><br>可选。<br>随机字符串的最大长度。默认值为 7。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Random.string()</span><br><span class="line"><span class="comment">// =&gt; "pJjDUe"</span></span><br><span class="line">Random.string( <span class="number">5</span> )</span><br><span class="line"><span class="comment">// =&gt; "GaadY"</span></span><br><span class="line">Random.string( <span class="string">'lower'</span>, <span class="number">5</span> )</span><br><span class="line"><span class="comment">// =&gt; "jseqj"</span></span><br><span class="line">Random.string( <span class="number">7</span>, <span class="number">10</span> )</span><br><span class="line"><span class="comment">// =&gt; "UuGQgSYk"</span></span><br><span class="line">Random.string( <span class="string">'aeiou'</span>, <span class="number">1</span>, <span class="number">3</span> )</span><br><span class="line"><span class="comment">// =&gt; "ea"</span></span><br><span class="line">Random.string( <span class="string">'壹贰叁肆伍陆柒捌玖拾'</span>, <span class="number">3</span>, <span class="number">5</span> )</span><br><span class="line"><span class="comment">// =&gt; "肆捌伍叁"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="整型数组"><a href="#整型数组" class="headerlink" title="整型数组"></a>整型数组</h3><p><code>Random.range( start?, stop, step? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Random.range( stop )</span><br><span class="line">Random.range( start, stop )</span><br><span class="line">Random.range( start, stop, step )</span><br></pre></td></tr></table></figure></p>
+<p>返回一个整型数组。</p>
+<h4 id="参数-8"><a href="#参数-8" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>start</code><br>可选。<br>数组中整数的起始值。</li>
+<li><code>stop</code><br>必选。<br>数组中整数的结束值（不包含在返回值中）。</li>
+<li><code>step</code><br>可选。<br>数组中整数之间的步长。默认值为 1。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Random.range(<span class="number">10</span>)</span><br><span class="line"><span class="comment">// =&gt; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span></span><br><span class="line">Random.range(<span class="number">3</span>, <span class="number">7</span>)</span><br><span class="line"><span class="comment">// =&gt; [3, 4, 5, 6]</span></span><br><span class="line">Random.range(<span class="number">1</span>, <span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line"><span class="comment">// =&gt; [1, 3, 5, 7, 9]</span></span><br><span class="line">Random.range(<span class="number">1</span>, <span class="number">10</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">// =&gt; [1, 4, 7]</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="时间日期"><a href="#时间日期" class="headerlink" title="时间日期"></a>时间日期</h2><h3 id="日期字符串"><a href="#日期字符串" class="headerlink" title="日期字符串"></a>日期字符串</h3><p><code>Random.date( format? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.date()</span><br><span class="line">Random.date(format)</span><br></pre></td></tr></table></figure></p>
+<p>返回一个随机的日期字符串。</p>
+<h4 id="参数-9"><a href="#参数-9" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>format</code><br>可选。<br>指示生成的日期字符串的格式。默认值为 yyyy-MM-dd。</li>
+</ul>
+<blockquote>
+<p>可选的占位符参考自 Ext.Date，如下所示：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Format</th>
+<th style="text-align:left">Description</th>
+<th style="text-align:left">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">yyyy</td>
+<td style="text-align:left">一年的完整数字表示法，4位数字</td>
+<td style="text-align:left">1999 or 2003</td>
+</tr>
+<tr>
+<td style="text-align:left">yy</td>
+<td style="text-align:left">一年的两位数表示法</td>
+<td style="text-align:left">99 or 03</td>
+</tr>
+<tr>
+<td style="text-align:left">y</td>
+<td style="text-align:left">一年的两位数表示法</td>
+<td style="text-align:left">99 or 03</td>
+</tr>
+<tr>
+<td style="text-align:left">MM</td>
+<td style="text-align:left">月份的数字表示法，带前导零</td>
+<td style="text-align:left">01 to 12</td>
+</tr>
+<tr>
+<td style="text-align:left">M</td>
+<td style="text-align:left">月份的数字表示，不带前导零</td>
+<td style="text-align:left">1 to 12</td>
+</tr>
+<tr>
+<td style="text-align:left">dd</td>
+<td style="text-align:left">每月的天数，2位数字，前导零</td>
+<td style="text-align:left">01 to 31</td>
+</tr>
+<tr>
+<td style="text-align:left">d</td>
+<td style="text-align:left">月份中没有前导零的天数日期</td>
+<td style="text-align:left">1 to 31</td>
+</tr>
+<tr>
+<td style="text-align:left">HH</td>
+<td style="text-align:left">一小时24小时格式，带前导零</td>
+<td style="text-align:left">00 to 23</td>
+</tr>
+<tr>
+<td style="text-align:left">H</td>
+<td style="text-align:left">一小时24小时格式，不带前导零</td>
+<td style="text-align:left">0 to 23</td>
+</tr>
+<tr>
+<td style="text-align:left">hh</td>
+<td style="text-align:left">12小时格式，每小时不带前导零</td>
+<td style="text-align:left">1 to 12</td>
+</tr>
+<tr>
+<td style="text-align:left">h</td>
+<td style="text-align:left">12小时格式的1小时，带前导零</td>
+<td style="text-align:left">01 to 12</td>
+</tr>
+<tr>
+<td style="text-align:left">mm</td>
+<td style="text-align:left">分钟，带前导零</td>
+<td style="text-align:left">00 to 59</td>
+</tr>
+<tr>
+<td style="text-align:left">m</td>
+<td style="text-align:left">分钟，不带前导零</td>
+<td style="text-align:left">0 to 59</td>
+</tr>
+<tr>
+<td style="text-align:left">ss</td>
+<td style="text-align:left">秒，带前导零</td>
+<td style="text-align:left">00 to 59</td>
+</tr>
+<tr>
+<td style="text-align:left">s</td>
+<td style="text-align:left">秒，不带前导零</td>
+<td style="text-align:left">0 to 59</td>
+</tr>
+<tr>
+<td style="text-align:left">SS</td>
+<td style="text-align:left">毫秒，带前导零</td>
+<td style="text-align:left">000 to 999</td>
+</tr>
+<tr>
+<td style="text-align:left">S</td>
+<td style="text-align:left">毫秒，不带前导零</td>
+<td style="text-align:left">0 to 999</td>
+</tr>
+<tr>
+<td style="text-align:left">A</td>
+<td style="text-align:left">大写的上午或下午</td>
+<td style="text-align:left">AM or PM</td>
+</tr>
+<tr>
+<td style="text-align:left">a</td>
+<td style="text-align:left">小写的上午或下午</td>
+<td style="text-align:left">am or pm</td>
+</tr>
+<tr>
+<td style="text-align:left">T</td>
+<td style="text-align:left">毫秒,从1970-1-1 00:00:00(UTC时间)计时</td>
+<td style="text-align:left">759883437303</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Random.date()</span><br><span class="line"><span class="comment">// =&gt; "2002-10-23"</span></span><br><span class="line">Random.date(<span class="string">'yyyy-MM-dd'</span>)</span><br><span class="line"><span class="comment">// =&gt; "1983-01-29"</span></span><br><span class="line">Random.date(<span class="string">'yy-MM-dd'</span>)</span><br><span class="line"><span class="comment">// =&gt; "79-02-14"</span></span><br><span class="line">Random.date(<span class="string">'y-MM-dd'</span>)</span><br><span class="line"><span class="comment">// =&gt; "81-05-17"</span></span><br><span class="line">Random.date(<span class="string">'y-M-d'</span>)</span><br><span class="line"><span class="comment">// =&gt; "84-6-5"</span></span><br></pre></td></tr></table></figure>
+<h3 id="时间字符串"><a href="#时间字符串" class="headerlink" title="时间字符串"></a>时间字符串</h3><p>Random.time( format? )<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.time()</span><br><span class="line">Random.time( format )</span><br></pre></td></tr></table></figure></p>
+<p>返回一个随机的时间字符串。</p>
+<h4 id="参数-10"><a href="#参数-10" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>format</code><br>可选。<br>指示生成的时间字符串的格式。默认值为 <code>HH:mm:ss</code>。</li>
+</ul>
+<blockquote>
+<p>可选的占位符参考自 Ext.Date，请参见 Random.date( format? )上面那个表格。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Random.time()</span><br><span class="line"><span class="comment">// =&gt; "00:14:47"</span></span><br><span class="line">Random.time(<span class="string">'A HH:mm:ss'</span>)</span><br><span class="line"><span class="comment">// =&gt; "PM 20:47:37"</span></span><br><span class="line">Random.time(<span class="string">'a HH:mm:ss'</span>)</span><br><span class="line"><span class="comment">// =&gt; "pm 17:40:00"</span></span><br><span class="line">Random.time(<span class="string">'HH:mm:ss'</span>)</span><br><span class="line"><span class="comment">// =&gt; "03:57:53"</span></span><br><span class="line">Random.time(<span class="string">'H:m:s'</span>)</span><br><span class="line"><span class="comment">// =&gt; "3:5:13"</span></span><br></pre></td></tr></table></figure>
+<h3 id="日期时间字符串"><a href="#日期时间字符串" class="headerlink" title="日期时间字符串"></a>日期时间字符串</h3><p>Random.datetime( format? )<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.datetime()</span><br><span class="line">Random.datetime( format )</span><br></pre></td></tr></table></figure></p>
+<p>返回一个随机的日期和时间字符串。</p>
+<h4 id="参数-11"><a href="#参数-11" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>format</code><br>可选。<br>指示生成的日期和时间字符串的格式。默认值为 <code>yyyy-MM-dd HH:mm:ss</code>。</li>
+</ul>
+<blockquote>
+<p>可选的占位符参考自 Ext.Date，请参见 Random.date( format? )上面的表格。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Random.datetime()</span><br><span class="line"><span class="comment">// =&gt; "1977-11-17 03:50:15"</span></span><br><span class="line">Random.datetime(<span class="string">'yyyy-MM-dd A HH:mm:ss'</span>)</span><br><span class="line"><span class="comment">// =&gt; "1976-04-24 AM 03:48:25"</span></span><br><span class="line">Random.datetime(<span class="string">'yy-MM-dd a HH:mm:ss'</span>)</span><br><span class="line"><span class="comment">// =&gt; "73-01-18 pm 22:12:32"</span></span><br><span class="line">Random.datetime(<span class="string">'y-MM-dd HH:mm:ss'</span>)</span><br><span class="line"><span class="comment">// =&gt; "79-06-24 04:45:16"</span></span><br><span class="line">Random.datetime(<span class="string">'y-M-d H:m:s'</span>)</span><br><span class="line"><span class="comment">// =&gt; "02-4-23 2:49:40"</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="当前日期时间字符串"><a href="#当前日期时间字符串" class="headerlink" title="当前日期时间字符串"></a>当前日期时间字符串</h3><p>Random.now( unit?, format? )<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Ranndom.now( unit, format )</span><br><span class="line">Ranndom.now()</span><br><span class="line">Ranndom.now( format )</span><br><span class="line">Ranndom.now( unit )</span><br></pre></td></tr></table></figure></p>
+<p>返回当前的日期和时间字符串。</p>
+<h4 id="参数-12"><a href="#参数-12" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><p><code>unit</code><br>可选。<br>表示时间单位，用于对当前日期和时间进行格式化。可选值有：year、month、week、day、hour、minute、second、week，默认不会格式化。</p>
+</li>
+<li><p><code>format</code><br>可选。<br>指示生成的日期和时间字符串的格式。默认值为<code>yyyy-MM-dd HH:mm:ss</code>。</p>
+</li>
+</ul>
+<blockquote>
+<p>可选的占位符参考自 Ext.Date，请参见 Random.date(format)上面的表格。</p>
+</blockquote>
+<blockquote>
+<p>Random.now() 的实现参考了 Moment.js。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Random.now()</span><br><span class="line"><span class="comment">// =&gt; "2014-04-29 20:08:38 "</span></span><br><span class="line">Random.now(<span class="string">'day'</span>, <span class="string">'yyyy-MM-dd HH:mm:ss SS'</span>)</span><br><span class="line"><span class="comment">// =&gt; "2014-04-29 00:00:00 000"</span></span><br><span class="line">Random.now(<span class="string">'day'</span>)</span><br><span class="line"><span class="comment">// =&gt; "2014-04-29 00:00:00 "</span></span><br><span class="line">Random.now(<span class="string">'yyyy-MM-dd HH:mm:ss SS'</span>)</span><br><span class="line"><span class="comment">// =&gt; "2014-04-29 20:08:38 157"</span></span><br><span class="line"></span><br><span class="line">Random.now(<span class="string">'year'</span>)</span><br><span class="line"><span class="comment">// =&gt; "2014-01-01 00:00:00"</span></span><br><span class="line">Random.now(<span class="string">'month'</span>)</span><br><span class="line"><span class="comment">// =&gt; "2014-04-01 00:00:00"</span></span><br><span class="line">Random.now(<span class="string">'week'</span>)</span><br><span class="line"><span class="comment">// =&gt; "2014-04-27 00:00:00"</span></span><br><span class="line">Random.now(<span class="string">'day'</span>)</span><br><span class="line"><span class="comment">// =&gt; "2014-04-29 00:00:00"</span></span><br><span class="line">Random.now(<span class="string">'hour'</span>)</span><br><span class="line"><span class="comment">// =&gt; "2014-04-29 20:00:00"</span></span><br><span class="line">Random.now(<span class="string">'minute'</span>)</span><br><span class="line"><span class="comment">// =&gt; "2014-04-29 20:08:00"</span></span><br><span class="line">Random.now(<span class="string">'second'</span>)</span><br><span class="line"><span class="comment">// =&gt; "2014-04-29 20:08:38"</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><h3 id="随机图片地址"><a href="#随机图片地址" class="headerlink" title="随机图片地址"></a>随机图片地址</h3><p><code>Random.image( size?, background?, foreground?, format?, text? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Random.image()</span><br><span class="line">Random.image( size )</span><br><span class="line">Random.image( size, background )</span><br><span class="line">Random.image( size, background, text )</span><br><span class="line">Random.image( size, background, foreground, text )</span><br><span class="line">Random.image( size, background, foreground, format, text )</span><br></pre></td></tr></table></figure></p>
+<p>生成一个随机的图片地址。</p>
+<blockquote>
+<p>Random.image() 用于生成高度自定义的图片地址，<br>一般情况下，应该使用更简单的 Random.dataImage()。</p>
+</blockquote>
+<h4 id="参数-13"><a href="#参数-13" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><p><code>size</code><br>可选。<br>指示图片的宽高，格式为 ‘宽x高’。默认从下面的数组中随机读取一个：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    <span class="string">'300x250'</span>, <span class="string">'250x250'</span>, <span class="string">'240x400'</span>, <span class="string">'336x280'</span>, </span><br><span class="line">    <span class="string">'180x150'</span>, <span class="string">'720x300'</span>, <span class="string">'468x60'</span>, <span class="string">'234x60'</span>, </span><br><span class="line">    <span class="string">'88x31'</span>, <span class="string">'120x90'</span>, <span class="string">'120x60'</span>, <span class="string">'120x240'</span>, </span><br><span class="line">    <span class="string">'125x125'</span>, <span class="string">'728x90'</span>, <span class="string">'160x600'</span>, <span class="string">'120x600'</span>, </span><br><span class="line">    <span class="string">'300x600'</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>background</code><br>可选。<br>指示图片的背景色。默认值为 ‘#000000’。</p>
+</li>
+<li><code>foreground</code><br>可选。<br>指示图片的前景色（文字）。默认值为 ‘#FFFFFF’。</li>
+<li><code>format</code><br>可选。<br>指示图片的格式。默认值为 ‘png’，可选值包括：’png’、’gif’、’jpg’。</li>
+<li><code>text</code><br>可选。<br>指示图片上的文字。默认值为参数 size。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Random.image()</span><br><span class="line"><span class="comment">// =&gt; "http://dummyimage.com/125x125"</span></span><br><span class="line">Random.image(<span class="string">'200x100'</span>)</span><br><span class="line"><span class="comment">// =&gt; "http://dummyimage.com/200x100"</span></span><br><span class="line">Random.image(<span class="string">'200x100'</span>, <span class="string">'#fb0a2a'</span>)</span><br><span class="line"><span class="comment">// =&gt; "http://dummyimage.com/200x100/fb0a2a"</span></span><br><span class="line">Random.image(<span class="string">'200x100'</span>, <span class="string">'#02adea'</span>, <span class="string">'Hello'</span>)</span><br><span class="line"><span class="comment">// =&gt; "http://dummyimage.com/200x100/02adea&amp;text=Hello"</span></span><br><span class="line">Random.image(<span class="string">'200x100'</span>, <span class="string">'#00405d'</span>, <span class="string">'#FFF'</span>, <span class="string">'Mock.js'</span>)</span><br><span class="line"><span class="comment">// =&gt; "http://dummyimage.com/200x100/00405d/FFF&amp;text=Mock.js"</span></span><br><span class="line">Random.image(<span class="string">'200x100'</span>, <span class="string">'#ffcc33'</span>, <span class="string">'#FFF'</span>, <span class="string">'png'</span>, <span class="string">'!'</span>)</span><br><span class="line"><span class="comment">// =&gt; "http://dummyimage.com/200x100/ffcc33/FFF.png&amp;text=!"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Base64图片编码"><a href="#Base64图片编码" class="headerlink" title="Base64图片编码"></a>Base64图片编码</h3><p><code>Random.dataImage( size?, text? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Random.dataImage()</span><br><span class="line">Random.dataImage( size )</span><br><span class="line">Random.dataImage( size, text )</span><br></pre></td></tr></table></figure></p>
+<p>生成一段随机的 Base64 图片编码。</p>
+<blockquote>
+<p>如果需要生成高度自定义的图片，请使用 Random.image()。</p>
+</blockquote>
+<h4 id="参数-14"><a href="#参数-14" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><p><code>size</code><br>可选。<br>指示图片的宽高，格式为 ‘宽x高’。默认从下面的数组中随机读取一个：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    <span class="string">'300x250'</span>, <span class="string">'250x250'</span>, <span class="string">'240x400'</span>, <span class="string">'336x280'</span>, </span><br><span class="line">    <span class="string">'180x150'</span>, <span class="string">'720x300'</span>, <span class="string">'468x60'</span>, <span class="string">'234x60'</span>, </span><br><span class="line">    <span class="string">'88x31'</span>, <span class="string">'120x90'</span>, <span class="string">'120x60'</span>, <span class="string">'120x240'</span>, </span><br><span class="line">    <span class="string">'125x125'</span>, <span class="string">'728x90'</span>, <span class="string">'160x600'</span>, <span class="string">'120x600'</span>, </span><br><span class="line">    <span class="string">'300x600'</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>text</code><br>可选。<br>指示图片上的文字。默认值为参数 size。</p>
+<blockquote>
+<p>图片的背景色是随机的，取值范围参考自 <a href="http://brandcolors.net/。" target="_blank" rel="noopener">http://brandcolors.net/。</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Random.dataImage()</span><br><span class="line"><span class="comment">// =&gt; "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH0AAAB9CAYAAACPgGwlAAAFJElEQVR4Xu2dS0hUURzG/1Yqlj2otJe10AqCoiJaFFTUpgcUhLaKCIogKCEiCl0U1SIIF1EIQlFEtCmkpbWSHlAQYRYUlI9Ie6nYmI9hfIx1LpzL3PGO/aeuM/r/f7PRufe7d873/ea75xw3ZjTumDtMeKlKIAPQVfF2zAK6PuaArpA5oAO6xgQUesacDugKE1BoGU0HdIUJKLSMpgO6wgQUWkbTAV1hAgoto+mArjABhZbRdEBXmIBCy2g6oCtMQKFlNB3QFSag0DKaDugKE1BoGU0HdIUJKLSMpgO6wgQUWkbTAV1hAgoto+mArjABhZbRdEBXmIBCy2g6oCtMQKFlNB3QFSag0DKaDugKE1BoGU0HdIUJKLSMpgO6wgQUWkbTAV1hAgoto+mArjABhZbRdEBXmIBCy2g6oCtMQKFlNB3QFSag0DKaDugKE1BoGU0HdIUJKLQ8bpo+fft+ylxYSJ23LvpisOfNST/N7ENniYa9/0xy4GsTdT+6+09Yx9t4/slEgovSDt2EO3P3YcoqWuUMsWln3oihFlTWUlbhSvf4UKid2iqOUfhVrXussKZ9xHXh10/oW1lxUnmNt/EkNXimOK3QTTtn7Sv1DDUees66rTT/3B0a/NFCvc9raOqf9+YL0PfiIX0/f8ADPdrXTZEPde6xyMd66rx5wXlvnwThN8/cL4ttc7S3i0L3rjqaVI2HyWdMZGmFbhwtvv7cgZm7ZS9NyS/wbboBb1ttwQy2tdLng2s90OOPxSa24FI15azZTAOtDdRyZAOZe84ru0GTps2g0P1r7pcjVeMZE5rMm6Yduh3nktt1CaHHesk/XUW5W4sp8v4lfTm5ywN9eCBCQz/baOBLE0Ua3rgg4z/DPCUmz5xD2SvWU6IpIBXjYTIKXDahoNtHvUmho/KMZ5HmN6f31FZT2+Wjbmix12dkZtNoTwYO9P8dT+A0mTecMNBNwPmnKmnyrDyKhxnv1U4B0d5f9KmkyHPaPinMwfYrJxKu7v8GPajxMDkFKpsQ0JMJ2KZjmm8e9817CjxNt/O4Odjf+JZaj2/zDXQ06EGNJ1CSSdws7dDNAsvsr7OXr3UWVeG6x87wv5WXOD9jAzZbtf7md669nscP3KbOLa2gaE+Xc27axl2UWbB0xLxvFmnmuJnTzU/7e+wuIJXjSYJToNK0Q/ebi41Du3Xz20bZBGJX3fH3Mav0jqpyd9Xvt3o3W0Ezt492H/tZQY8nUIpJ3izt0J39s8/L7q9N03NWb/LVhOuferZyWYuX0WDnD2evHv+XOPs5sdc4+/RFRX+eECFnn25eqRpPkpwClacdeqBucDNWAoDOikmWCNBl8WS5AXRWTLJEgC6LJ8sNoLNikiUCdFk8WW4AnRWTLBGgy+LJcgPorJhkiQBdFk+WG0BnxSRLBOiyeLLcADorJlkiQJfFk+UG0FkxyRIBuiyeLDeAzopJlgjQZfFkuQF0VkyyRIAuiyfLDaCzYpIlAnRZPFluAJ0VkywRoMviyXID6KyYZIkAXRZPlhtAZ8UkSwTosniy3AA6KyZZIkCXxZPlBtBZMckSAbosniw3gM6KSZYI0GXxZLkBdFZMskSALosnyw2gs2KSJQJ0WTxZbgCdFZMsEaDL4slyA+ismGSJAF0WT5YbQGfFJEsE6LJ4stwAOismWSJAl8WT5QbQWTHJEgG6LJ4sN4DOikmWCNBl8WS5AXRWTLJEgC6LJ8sNoLNikiUCdFk8WW4AnRWTLNFvXskYA3TG3JwAAAAASUVORK5CYII="</span></span><br><span class="line">Random.dataImage(<span class="string">'200x100'</span>)</span><br><span class="line"><span class="comment">// =&gt; "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAADDhn8LAAAIaklEQVR4Xu2ae2xVVRaHf31BAXnVUijgQKlArYO1YFsGZaYS8YEYqVQFoRmrhhkQRUVgRsmo+GjUgppCfCBo8AE1GoiYaBSEQFAoUNryaAELRAoVbOnzFim9vZO9Te9w5bYudvxr1u/8Q+hZa5+zvrW/c/Y554ZsRXcfuJEACQQlEEJBODNIoH0CFISzgwQ6IEBBOD1IgIJwDpCAGwHeQdy4MUsJAQqipNEs040ABXHjxiwlBCiIkkazTDcCFMSNG7OUEKAgShrNMt0IUBA3bsxSQoCCKGk0y3QjQEHcuDFLCQEKoqTRLNONAAVx48YsJQQoiJJGs0w3AhTEjRuzlBCgIEoazTLdCFAQN27MUkKAgihpNMt0I0BB3LgxSwkBCqKk0SzTjQAFcePGLCUEKIiSRrNMNwIUxI0bs5QQoCBKGs0y3QhQEDduzFJCgIIoaTTLdCNAQdy4MUsJAQqipNEs040ABXHjxiwlBCiIkkazTDcCFMSNG7OUEKAgShrNMt0IUBA3bsxSQoCCKGk0y3QjQEHcuDFLCQEKoqTRLNONAAVx48YsJQQoiJJGs0w3AhTEjRuzlBCgIEoazTLdCFCQS+B2ecZE9J8zC2HdL0PTgTKUz3oC3oZG/wgD5j6CPlMmA6GhqN+yDUce/3fA6PHLFqPHX1LR2tyM0x/mo3LpO6Kj9xp/I6Im3oqWunqcePWNgGOaAToa15zrsFXvIHLQFWiprUP57LloOnBQdFwGARREOAvi815F7Ox/2OjWX35BaGQkzv9chZIbbsbZQz/Av9/ng6+lBSEREajbtAV7x020Odds+Qo9xo6Br7nZ7jPbiSV5OPrkwt89g9SKMnQa0B++8+ex59oxARO8o3EjYqKRXPQdOsX2Q6vHg9Bu3ewYpZOn48z6L3/3uAygIKI5EDlkMEaV7rJCmAlvhLhyeR76PfR3/PxRPo7+6xmklJfA6/FYYcwVOmn7RnRPS8GxBf+Bt7ER8cuWwFOyD3uSxsBM3JH7ChDeq+dFE769Exq26m30mZKJwj+n2eObLXbWQx2O+6fnnkZ05iSc/nANDmXNQMz90zB0eR6aK05gZ9wIUe3ag3gHEcyA2NkzEJ+Xix+fy8GPz+bYDLN0ST1eiuafTuP0R/kYtGhhwP5OA/tbaRqLStDa6EHP9LEovn48GrbvDJjcVZ+us8suz9792H/bZLsvLvcFxEy7F8cWLsKpFR/Yv8UvzUXsPx/E7sQUvyAjNq5vd9yflr+PqAk3IyQsDDtih/qrTPj0A0Rn3IEDk6byLiLoPQURQDLPHt2SkwLW/20C1G7cjHMVJ9HvgSzsSU2Hp7DYP+LIvdutSGbtHxF9OQoGJvj3mb+nVR5GzYbNiIjqbZdfx1/KxakVqzCqbDe8DQ0oTBqD5oqT7QqSXLSt3XFrN29Fr/SxqNuyDfsnZPqPG31PBhLWvI/yR+eJn4EEiP5vQyiIY2tH7i9A16uG4+i8hYiMG3TR1d0Mm1y41Qri9TQhvGePgGVNmyBnvtqAw9kzkXJs36/PNdVn0HlAf5RmTkf12i/8ZxfsDmIEaW9cI17vm9Jhxi/LzPKP0/v2W3D15/konzOfggh6T0EEkH4bYpc24/6G6nVfoDTjvqDLnzZBwnv3sm+fOhLETGB7Zf94JRAW5n9muPC4FMShUX9ACgW5RIiJn69B1B0T0FCwC8Vp42y2fWDPnn7REssslUI7d4K30QMjyoVLLLtE+6HYXuFLJ02FubInrluNkPBwVL61AuUzHw84s2CCmCVce+PWbNgUdInV94EsDH13KZdYwr5TECEoE2beJMVkTfW/jWpLHTj/MQx+eVHAQ7p981W2G/Xf7YC3vh5Rt98a8JBuvpnE5b6I4zmLUZGz2MZGxPRBS1W1/fe3D9HBBLGydjBuzLR7ENqlC3bEDPFX2ZZTkn4b6rd+fwnV6wylIMK+t33nMJO9/NH59spt7g7nTlSi9uuNSDmyFz6vFwcy7kPjzkIkbf/WPqMcyp6J1rNnkbD6PTQdPIzitBvRJWEYzDINISEoGvVX+9bK3JVOvr4MlW+ugHm+MaJc+PYpmCB2WdbBuAPmzbGvoqvXrkfpXdMwcMFjGPziM2gqPYjCEaOFlesOoyCC/puJFvfK80EjzTeFgiuugo3JedY+Q7RtVfmfoWxKtv3v8NUr7XcM/9baiiNPPg1vXb1d8niKSrBn5Fi728rw8AzUbtiEfePvDFjGFV4zOuBDYXvjnnxtmc2zLxMS//f2rKWmxv+tRlC6+hAKIpgCXROHo8f1wa+45hVvzZff2FHMT0L6Zk+3dwbzUxNzN7hwM8uqy65LBnw+VL75rn+J0/fBLFR9sjbgJyTRd0+yslWt+cwOYc6h++hUnFr563cRybhtMXFLXrJf083PYo7Ofeqin6oIEKgNoSBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQQoiIQSY9QSoCBqW8/CJQT+C8lshm60+8xmAAAAAElFTkSuQmCC"</span></span><br><span class="line">Random.dataImage(<span class="string">'200x100'</span>, <span class="string">'Hello Mock.js!'</span>)</span><br><span class="line"><span class="comment">// =&gt; "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABkCAYAAADDhn8LAAALI0lEQVR4Xu2aCXCO1xrH/1nIIrFzUVpLbdHYYt8bWm6rRBWJpcQNg9RWak/t281tqpbWtbRoSS9XEEuZwaXo2EpariqGsdyh0UpjyR6585y57zdvEkn6nWtG5PzfGdO83/c+5z3P73n+53nO+eqCgOFZ4EUCJPBEAi4UCDODBPImQIEwO0ggHwIUCNODBCgQ5gAJ6BFgBdHjRitDCFAghgSabuoRoED0uNHKEAIUiCGBppt6BCgQPW60MoQABWJIoOmmHgEKRI8brQwhQIEYEmi6qUeAAtHjRitDCFAghgSabuoRoED0uNHKEAIUiCGBppt6BCgQPW60MoQABWJIoOmmHgEKRI8brQwhQIEYEmi6qUeAAtHjRitDCFAghgSabuoRoED0uNHKEAIUiCGBppt6BCgQPW60MoQABWJIoOmmHgEKRI8brQwhQIEYEmi6qUeAAtHjRitDCFAghgSabuoRoED0uNHKEAIUiCGBppt6BCgQPW60MoQABWJIoOmmHgEKRI8brQwhQIEYEmi6qUeAAtHjRitDCFAghgSabuoRoED0uNHKEAIUiCGBppt6BCgQPW60MoQABWJIoOmmHgEKRI8brQwhUCQF4uvtgcVjesPN1RVfxB7D8fPXVDjtn+85dg47Dv+Qb5h7BzZB9/YNcTfhISYt3Yqc987miPV+dzdXZGUB9jm81rI++nQJUEOmpKZj+qfb8SAp1dlXZHte3jdvVBBS0zIwd82uAscb0r218jfhQRLej9pc4PMy/pwRPeHm6oIDpy4WyPP/cuYZGRdJgfTtEoDoBcPg6uqC0X+NxvLNhxRe++c7DsUhaOJn+WJfNX0ghvVqj/SMTDQOmYtx/Ttnu79w7bZTYbO/Xwx3fvsjery/Qo1xeNVEdGhaW/1tvc/Z8XNOxnpf5uPHav4Fjbd6xiCEBbVDZuZjNAyeU+DzzvJ0ClYhebhICuTNdv7Y8dEoJZDwxdH47J+HFW7rczc3V2zZ/z36TlmVbxiWTwpBeN9OeJSciqYD5mFMcOds95duxDsVRvv7xfDyjXjUeTtCVbZ/b56FapXKqvGSU9LQuP9cODt+zslY70tJS1fzL2i8Dwa9jtAebfBb4iOETFuNW/G/5+ufszydglVIHi7yAuk3dbUSg1xtG9VSK7VdIIO7t8aC8CBULOOLzMdZuBWfgPBFm7Dv+AVYArES1hKIPYFl1R3QrQW8PIurd9y8cw/D5n2p7PNKWHm/XJbwMjIfK4F4ehTLJZBR73TEzOFvoWJZX/Vd4sNkLP36ID5cGavuRVw7osLRrvHLcAHwMDkVe46dx4AZax0LgiUQ/5dfwEfj+8CjmLuqDp1HfpxtihFhb2Joj7ZIuP9IVba09EzsWvIemtStBnd3NzXfb89cxhtjlyk7aQmj54cpnhu/OYGBEZ8XkrR+etMo0gKRwJ2+cB0PklIUMW/P4mjRoDpcXFyUaOSfFWA70vsPk9E6dDFG9emkKkZeApk29A2IwOSStsRKfGmROoRFOvY+1tj2yiardLlSJRA6ez3Kl/ZB5Nje+P1BMsqU9Ha8T5J+1fRBjnGzsrLU3OW/s/6+E3PW7FbC8qtZOVdGfBH7HbYePKMqaXJqOloOXojj66bAt4Sn2uMETfg0l4itllK+Dxg4H9ELwtCwdlVkZGTiUUoaSvl4qfdY7aksKhe3zkFpX69slfrppeezH6nICyQvxCKOSuVKon2T2rib8EC1ILLCxkSOVCu5JFhSSlqeAuk6+hPsXTZWie7C1dtoNWQhegc2hVQUWW0Pnf4Zr46IyvZ6SyCS5MfPXUWbRrVU+1faxwvBXZvjzMUbaFrvRZXA0mLFRoWjbvVKEMHKWPH37uPUhmmoVL4Ubv+aiHlrdmPZpBDVSu4+ek61RVe2z1fV5tYvCRixcKMSSGp6Bu4lPkLVP5VRY0trufPIj7nQ2Ctm4Mgo7Fs2FiV9vHDy/DW0HLII3ywdg1b+NXDl5l00f3eBql7Xdy2iQJ69jp2bgb03lkSUldnFBSjh5aHaLKuCBNR7ETWrVkBaegYS7iepz61WRgQUf+9BngKZsjwGUeP7quQcE/m14yDg7MYZaFy3Gq7cjEftXhF5CmTtjqP4S892Sig+3h54pdYLasWXtkUqlj1Btx+KQ6//HSjYV3lJcut5a8/StZUf6teojDu/JapTKBGIVdnsq/+TiNoF0nboYuxdPs7BQ54XHofPXMq2d/shOgL1qleCf7/ZBe5xnIti4Xi6SFcQSd689iDb/nUWHZvWQdlSJVRvLfsAueRItJi7m0pW+TuvFssukLC5G/B57HfK/uT6qWjeoLpjA24Ps73Fmrw0BvNG9cSj5DR1TCrv37T3JN7r96oSiCTogZUTVMtl7++XfRDseGbboTj079YCD5NSETAw9yY856GAzCWv9k++y7nnqlGlvNqziOCEpXX9dO02/PrMUreyIEjl9eszkwIpHJoueBZ/9BRLEqCZ30s4d+U/6lhTrg2zQ1WlkZX9pcrl8hTI0Dnr8eWcoaqdslZ4qyeXpLaP+aQ9iAhX9h3yDpVoF2+oPcGUId0cAtn1yWhUqVA6m9jiNkWgUZ2qShRb9p9GaI+2ak9iVTFpwcQnOSEbH7VZVRCpjB9v2o+xwYFqvlbL1LNjI3RpUV/97iGbfrtAZLyJg15XBxcTl2xBxbIlMWHga0oM1h5FNvorJofA19sT01ZsK/DUq+DIFb4ninwFye+YV/r08QO6qKjI39KKVC5fSt3PXBmrksKqIM0GLci2aZf7tR++i1b+NdXzV2/dVZtt6dntCZtXBQmeuhoj3+mITs3qqke+2nNCtUWSlDkPBeR72SdJRZN9hFzSAsqPeT/HzFX7IPnu5i/3UKtqBSUIqTrR+04pgcgpVr3eH2L97FAENq/nmJ9swO2/89gPJewLgOxfvv/pOhrUqqIEe+fXRHU8/ec2r6jfm6R9tbeZhS/N9WdkrECstiUmcgR6dmzsaCEkuTfsPo4hs9Y5VlSrhbGOea172SifWD9VtSDWJfZrth/F8Plf5YqKvbJJWyZ2Igixsd9bx7/yu4Vs1Lu391dJb11Hzl5Gh2F/U7eyqs8fFQSP4u6O74/GXUH7sMhcx7zSxp3/x0x1JC1zjzl4Vi0AOf2z3j/87Q4YF9I52x5GDi7kcGDhur2O8XP+3qSfjoXPskgKxFnMfjUq460ODdVKvHrbEadbBflfNCTZZaXWsS9ovoHN6qpK41m8GEQcOU+g5DRpfP8u8PH2RNylm2ovo3NZ+xt7CyVjS2WRtlMqyZLoAzpDP7c2FMhzG7qnO3H5sXTy4G6qkkp1qdJt0tN9wXM6GgXynAbuaU/b2qDLj4Ib955ULSYvgAJhFpBAPgQoEKYHCVAgzAES0CPACqLHjVaGEKBADAk03dQjQIHocaOVIQQoEEMCTTf1CFAgetxoZQgBCsSQQNNNPQIUiB43WhlCgAIxJNB0U48ABaLHjVaGEKBADAk03dQjQIHocaOVIQQoEEMCTTf1CFAgetxoZQgBCsSQQNNNPQIUiB43WhlCgAIxJNB0U48ABaLHjVaGEKBADAk03dQjQIHocaOVIQQoEEMCTTf1CFAgetxoZQgBCsSQQNNNPQIUiB43WhlCgAIxJNB0U48ABaLHjVaGEKBADAk03dQjQIHocaOVIQQoEEMCTTf1CFAgetxoZQgBCsSQQNNNPQIUiB43WhlCgAIxJNB0U48ABaLHjVaGEKBADAk03dQjQIHocaOVIQQoEEMCTTf1CFAgetxoZQgBCsSQQNNNPQIUiB43WhlC4L8WolIQDDthEAAAAABJRU5ErkJggg=="</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<h2 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h2><h3 id="颜色-RRGGBB"><a href="#颜色-RRGGBB" class="headerlink" title="颜色#RRGGBB"></a>颜色#RRGGBB</h3><p><code>Random.color()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.color()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个有吸引力的颜色，格式为 ‘#RRGGBB’。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.color()</span><br><span class="line"><span class="comment">// =&gt; "#3538B2"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="颜色-RRGGBB-1"><a href="#颜色-RRGGBB-1" class="headerlink" title="颜色(#RRGGBB)"></a>颜色(#RRGGBB)</h3><p><code>Random.hex()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.hex()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个有吸引力的颜色，格式为 ‘#RRGGBB’,其实和上面一样。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.hex()</span><br><span class="line"><span class="comment">// =&gt; "#3538B2"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="颜色rgb-r-g-b"><a href="#颜色rgb-r-g-b" class="headerlink" title="颜色rgb(r,g,b)"></a>颜色rgb(r,g,b)</h3><p><code>Random.rgb()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.rgb()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个有吸引力的颜色，格式为 ‘rgb(r, g, b)’。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.rgb()</span><br><span class="line"><span class="comment">// =&gt; "rgb(242, 198, 121)"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="颜色rgba-r-g-b-a"><a href="#颜色rgba-r-g-b-a" class="headerlink" title="颜色rgba(r,g,b,a)"></a>颜色rgba(r,g,b,a)</h3><p><code>Random.rgba()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.rgba()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个有吸引力的颜色，格式为 ‘rgba(r, g, b, a)’。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.rgba()</span><br><span class="line"><span class="comment">// =&gt; "rgba(242, 198, 121, 0.13)"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="颜色hsl-h-s-l"><a href="#颜色hsl-h-s-l" class="headerlink" title="颜色hsl(h,s,l)"></a>颜色hsl(h,s,l)</h3><p><code>Random.hsl()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.hsl()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个有吸引力的颜色，格式为 ‘hsl(h, s, l)’。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.hsl()</span><br><span class="line"><span class="comment">// =&gt; "hsl(345, 82, 71)"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="文本"><a href="#文本" class="headerlink" title="文本"></a>文本</h2><h3 id="一段英文文本"><a href="#一段英文文本" class="headerlink" title="一段英文文本"></a>一段英文文本</h3><p><code>Random.paragraph( min?, max? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Random.paragraph()</span><br><span class="line">Random.paragraph( len )</span><br><span class="line">Random.paragraph( min, max )</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一段英文文本。</p>
+<h4 id="参数-15"><a href="#参数-15" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>len</code><br>可选。<br>指示文本中句子的个数。默认值为 3 到 7 之间的随机数。</li>
+<li><code>min</code><br>可选。<br>指示文本中句子的最小个数。默认值为 3。</li>
+<li><code>max</code><br>可选。<br>指示文本中句子的最大个数。默认值为 7。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Random.paragraph()</span><br><span class="line"><span class="comment">// =&gt; "Yohbjjz psxwibxd jijiccj kvemj eidnus disnrst</span></span><br><span class="line"><span class="comment">// rcconm bcjrof tpzhdo ncxc yjws jnmdmty. Dkmiwza </span></span><br><span class="line"><span class="comment">// ibudbufrnh ndmcpz tomdyh oqoonsn jhoy rueieihtt </span></span><br><span class="line"><span class="comment">// vsrjpudcm sotfqsfyv mjeat shnqmslfo oirnzu cru </span></span><br><span class="line"><span class="comment">// qmpt ggvgxwv jbu kjde. Kzegfq kigj dtzdd ngtytgm </span></span><br><span class="line"><span class="comment">// comwwoox fgtee ywdrnbam utu nyvlyiv tubouw lezpkmyq </span></span><br><span class="line"><span class="comment">// fkoa jlygdgf pgv gyerges wbykcxhwe bcpmt beqtkq. </span></span><br><span class="line"><span class="comment">// Mfxcqyh vhvpovktvl hrmsgfxnt jmnhyndk qohnlmgc </span></span><br><span class="line"><span class="comment">// sicmlnsq nwku dxtbmwrta omikpmajv qda qrn </span></span><br><span class="line"><span class="comment">// cwoyfaykxa xqnbv bwbnyov hbrskzt. Pdfqwzpb </span></span><br><span class="line"><span class="comment">// hypvtknt bovxx noramu xhzam kfb ympmebhqxw </span></span><br><span class="line"><span class="comment">// gbtaszonqo zmsdgcku mjkjc widrymjzj nytudruhfr </span></span><br><span class="line"><span class="comment">// uudsitbst cgmwewxpi bye. Eyseox wyef ikdnws </span></span><br><span class="line"><span class="comment">// weoyof dqecfwokkv svyjdyulk glusauosnu </span></span><br><span class="line"><span class="comment">// achmrakky kdcfp kujrqcq xojqbxrp </span></span><br><span class="line"><span class="comment">// mpfv vmw tahxtnw fhe lcitj."</span></span><br><span class="line">    </span><br><span class="line">Random.paragraph(<span class="number">2</span>)</span><br><span class="line"><span class="comment">// =&gt; "Dlpec hnwvovvnq slfehkf zimy qpxqgy vwrbi </span></span><br><span class="line"><span class="comment">// mok wozddpol umkek nffjcmk gnqhhvm ztqkvjm kvukg </span></span><br><span class="line"><span class="comment">// dqubvqn xqbmoda. Vdkceijr fhhyemx hgkruvxuvr </span></span><br><span class="line"><span class="comment">// kuez wmkfv lusfksuj oewvvf cyw tfpo jswpseupm </span></span><br><span class="line"><span class="comment">// ypybap kwbofwg uuwn rvoxti ydpeeerf."</span></span><br><span class="line">    </span><br><span class="line">Random.paragraph(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">// =&gt; "Qdgfqm puhxle twi lbeqjqfi bcxeeecu </span></span><br><span class="line"><span class="comment">// pqeqr srsx tjlnew oqtqx zhxhkvq pnjns </span></span><br><span class="line"><span class="comment">// eblxhzzta hifj csvndh ylechtyu."</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="一段中文文本"><a href="#一段中文文本" class="headerlink" title="一段中文文本"></a>一段中文文本</h3><p><code>Random.cparagraph( min?, max? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Random.cparagraph()</span><br><span class="line">Random.cparagraph( len )</span><br><span class="line">Random.cparagraph( min, max )</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一段中文文本。  </p>
+<blockquote>
+<p>参数的含义和默认值同 <a href="#Random.paragraph( min?, max?">Random.paragraph( min?, max? )</a>)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Random.cparagraph()</span><br><span class="line"><span class="comment">// =&gt; "给日数时化周作少情者美制论。</span></span><br><span class="line"><span class="comment">// 到先争劳今已美变江以好较正新深。</span></span><br><span class="line"><span class="comment">// 族国般建难出就金感基酸转。</span></span><br><span class="line"><span class="comment">// 任部四那响成族利标铁导术一或已于。</span></span><br><span class="line"><span class="comment">// 省元切世权往着路积会其区素白思断。</span></span><br><span class="line"><span class="comment">// 加把他位间存定国工取除许热规先法方。"</span></span><br><span class="line">    </span><br><span class="line">Random.cparagraph(<span class="number">2</span>)</span><br><span class="line"><span class="comment">// =&gt; "去话起时为无子议气根复即传月广。</span></span><br><span class="line"><span class="comment">// 题林里油步不约认山形两标命导社干。"</span></span><br><span class="line">    </span><br><span class="line">Random.cparagraph(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">// =&gt; "候无部社心性有构员其深例矿取民为。</span></span><br><span class="line"><span class="comment">// 须被亲需报每完认支这明复几下在铁需连。</span></span><br><span class="line"><span class="comment">// 省备可离展五斗器就石正队除解动。"</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="一句英文"><a href="#一句英文" class="headerlink" title="一句英文"></a>一句英文</h3><p><code>Random.sentence( min?, max? )</code></p>
+<ul>
+<li><code>Random.sentence()</code></li>
+<li><code>Random.sentence( len )</code></li>
+<li><code>Random.sentence( min, max )</code><br>随机生成一个句子，第一个单词的首字母大写。<h4 id="参数-16"><a href="#参数-16" class="headerlink" title="参数"></a>参数</h4></li>
+<li><code>len</code><br>可选。<br>指示句子中单词的个数。默认值为 12 到 18 之间的随机数。</li>
+<li><code>min</code><br>可选。<br>指示句子中单词的最小个数。默认值为 12。</li>
+<li><code>max</code><br>可选。<br>指示句子中单词的最大个数。默认值为 18。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Random.sentence()</span><br><span class="line"><span class="comment">// =&gt; "Jovasojt qopupwh plciewh dryir zsqsvlkga yeam."</span></span><br><span class="line">Random.sentence(<span class="number">5</span>)</span><br><span class="line"><span class="comment">// =&gt; "Fwlymyyw htccsrgdk rgemfpyt cffydvvpc ycgvno."</span></span><br><span class="line">Random.sentence(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line"><span class="comment">// =&gt; "Mgl qhrprwkhb etvwfbixm jbqmg."</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="一句中文"><a href="#一句中文" class="headerlink" title="一句中文"></a>一句中文</h3><p><code>Random.csentence( min?, max? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Random.csentence()</span><br><span class="line">Random.csentence( len )</span><br><span class="line">Random.csentence( min, max )</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一段中文文本。</p>
+<blockquote>
+<p>参数的含义和默认值同 <a href="#Random.sentence( min?, max?">Random.sentence( min?, max? )</a>)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Random.csentence()</span><br><span class="line"><span class="comment">// =&gt; "第任人九同段形位第律认得。"</span></span><br><span class="line">    </span><br><span class="line">Random.csentence(<span class="number">2</span>)</span><br><span class="line"><span class="comment">// =&gt; "维总。"</span></span><br><span class="line">    </span><br><span class="line">Random.csentence(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">// =&gt; "厂存。"</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="一个单词"><a href="#一个单词" class="headerlink" title="一个单词"></a>一个单词</h3><p><code>Random.word( min?, max? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Random.word()</span><br><span class="line">Random.word( len )</span><br><span class="line">Random.word( min, max )</span><br></pre></td></tr></table></figure></p>
+<h4 id="参数-17"><a href="#参数-17" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>len</code><br>可选。<br>指示单词中字符的个数。默认值为 3 到 10 之间的随机数。</li>
+<li><code>min</code><br>可选。<br>指示单词中字符的最小个数。默认值为 3。</li>
+<li><code>max</code><br>可选。<br>指示单词中字符的最大个数。默认值为 10。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Random.word()</span><br><span class="line"><span class="comment">// =&gt; "fxpocl"</span></span><br><span class="line">Random.word(<span class="number">5</span>)</span><br><span class="line"><span class="comment">// =&gt; "xfqjb"</span></span><br><span class="line">Random.word(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line"><span class="comment">// =&gt; "kemh"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>目前单词中的字符是随机的小写字母，未来会根据词法生成『可读』的单词。</p>
+</blockquote>
+<h3 id="一个字"><a href="#一个字" class="headerlink" title="一个字"></a>一个字</h3><p><code>Random.cword( pool?, min?, max? )</code>  </p>
+<ul>
+<li><code>Random.cword()</code></li>
+<li><code>Random.cword( pool )</code></li>
+<li><code>Random.cword( length )</code></li>
+<li><code>Random.cword( pool, length )</code></li>
+<li><code>Random.cword( min, max )</code></li>
+<li><code>Random.cword( pool, min, max )</code></li>
+</ul>
+<p>随机生成一个汉字。</p>
+<h4 id="参数-18"><a href="#参数-18" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>pool</code><br>可选。<br>汉字字符串。表示汉字字符池，将从中选择一个汉字字符返回。</li>
+<li><code>min</code><br>可选。<br>随机汉字字符串的最小长度。默认值为 1。</li>
+<li><code>max</code><br>可选。<br>随机汉字字符串的最大长度。默认值为 1。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Random.cword()</span><br><span class="line"><span class="comment">// =&gt; "干"</span></span><br><span class="line">Random.cword(<span class="string">'零一二三四五六七八九十'</span>)</span><br><span class="line"><span class="comment">// =&gt; "六"</span></span><br><span class="line">Random.cword(<span class="number">3</span>)</span><br><span class="line"><span class="comment">// =&gt; "别金提"</span></span><br><span class="line">Random.cword(<span class="string">'零一二三四五六七八九十'</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">// =&gt; ""七七七""</span></span><br><span class="line">Random.cword(<span class="number">5</span>, <span class="number">7</span>)</span><br><span class="line"><span class="comment">// =&gt; "设过证全争听"</span></span><br><span class="line">Random.cword(<span class="string">'零一二三四五六七八九十'</span>, <span class="number">5</span>, <span class="number">7</span>)</span><br><span class="line"><span class="comment">// =&gt; "九七七零四"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="英文标题"><a href="#英文标题" class="headerlink" title="英文标题"></a>英文标题</h3><p><code>Random.title( min?, max? )</code></p>
+<ul>
+<li><code>Random.title()</code></li>
+<li><code>Random.title( len )</code></li>
+<li><code>Random.title( min, max )</code></li>
+</ul>
+<p>随机生成一句标题，其中每个单词的首字母大写。</p>
+<h4 id="参数-19"><a href="#参数-19" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>len</code><br>可选。<br>指示单词中字符的个数。默认值为 3 到 7 之间的随机数。</li>
+<li><code>min</code><br>可选。<br>指示单词中字符的最小个数。默认值为 3。</li>
+<li><code>max</code><br>可选。<br>指示单词中字符的最大个数。默认值为 7。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Random.title()</span><br><span class="line"><span class="comment">// =&gt; "Rduqzr Muwlmmlg Siekwvo Ktn Nkl Orn"</span></span><br><span class="line">Random.title(<span class="number">5</span>)</span><br><span class="line"><span class="comment">// =&gt; "Ahknzf Btpehy Xmpc Gonehbnsm Mecfec"</span></span><br><span class="line">Random.title(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line"><span class="comment">// =&gt; "Hvjexiondr Pyickubll Owlorjvzys Xfnfwbfk"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="中文标题"><a href="#中文标题" class="headerlink" title="中文标题"></a>中文标题</h3><p><code>Random.ctitle( min?, max? )</code></p>
+<ul>
+<li><code>Random.ctitle()</code></li>
+<li><code>Random.ctitle( len )</code></li>
+<li><code>Random.ctitle( min, max )</code></li>
+</ul>
+<p>随机生成一句中文标题。</p>
+<blockquote>
+<p>参数的含义和默认值同 <a href="#Random.title( min?, max?">Random.title( min?, max? )</a>)</p>
+</blockquote>
+<h4 id="参数-20"><a href="#参数-20" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>len</code><br>可选。<br>指示单词中字符的个数。默认值为 3 到 7 之间的随机数。</li>
+<li><code>min</code><br>可选。<br>指示单词中字符的最小个数。默认值为 3。</li>
+<li><code>max</code><br>可选。<br>指示单词中字符的最大个数。默认值为 7。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Random.ctitle()</span><br><span class="line"><span class="comment">// =&gt; "证构动必作"</span></span><br><span class="line">Random.ctitle(<span class="number">5</span>)</span><br><span class="line"><span class="comment">// =&gt; "应青次影育"</span></span><br><span class="line">Random.ctitle(<span class="number">3</span>, <span class="number">5</span>)</span><br><span class="line"><span class="comment">// =&gt; "出料阶相"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="名字"><a href="#名字" class="headerlink" title="名字"></a>名字</h2><h3 id="英文名"><a href="#英文名" class="headerlink" title="英文名"></a>英文名</h3><p><code>Random.first()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.first()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个常见的英文名。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.first()</span><br><span class="line"><span class="comment">// =&gt; "Nancy"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="英文姓"><a href="#英文姓" class="headerlink" title="英文姓"></a>英文姓</h3><p><code>Random.last()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.last()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个常见的英文姓。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.last()</span><br><span class="line"><span class="comment">// =&gt; "Martinez"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="英文姓名"><a href="#英文姓名" class="headerlink" title="英文姓名"></a>英文姓名</h3><p><code>Random.name( middle? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.name()</span><br><span class="line">Random.name( middle )</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个常见的英文姓名。</p>
+<h4 id="参数-21"><a href="#参数-21" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>middle</code><br>可选。<br>布尔值。指示是否生成中间名。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Random.name()</span><br><span class="line"><span class="comment">// =&gt; "Larry Wilson"</span></span><br><span class="line">Random.name(<span class="literal">true</span>)</span><br><span class="line"><span class="comment">// =&gt; "Helen Carol Martinez"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="中文名"><a href="#中文名" class="headerlink" title="中文名"></a>中文名</h3><p><code>Random.cfirst()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.cfirst()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个常见的中文名。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.cfirst()</span><br><span class="line"><span class="comment">// =&gt; "曹"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="中文姓"><a href="#中文姓" class="headerlink" title="中文姓"></a>中文姓</h3><p><code>Random.clast()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.clast()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个常见的中文姓。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.clast()</span><br><span class="line"><span class="comment">// =&gt; "艳"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="中文姓名"><a href="#中文姓名" class="headerlink" title="中文姓名"></a>中文姓名</h3><p><code>Random.cname()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.cname()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个常见的中文姓名。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.cname()</span><br><span class="line"><span class="comment">// =&gt; "袁军"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="网址"><a href="#网址" class="headerlink" title="网址"></a>网址</h2><h3 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h3><p><code>Random.url( protocol?, host? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.url()</span><br><span class="line">Random.url( protocol, host )</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个 URL。</p>
+<h4 id="参数-22"><a href="#参数-22" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>protocol</code><br>指定 URL 协议。例如 http。</li>
+<li><code>host</code><br>指定 URL 域名和端口号。例如 nuysoft.com。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Random.url()</span><br><span class="line"><span class="comment">// =&gt; "mid://axmg.bg/bhyq"</span></span><br><span class="line">Random.url(<span class="string">'http'</span>)</span><br><span class="line"><span class="comment">// =&gt; "http://splap.yu/qxzkyoubp"</span></span><br><span class="line">Random.url(<span class="string">'http'</span>, <span class="string">'nuysoft.com'</span>)</span><br><span class="line"><span class="comment">// =&gt; "http://nuysoft.com/ewacecjhe"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="URL协议"><a href="#URL协议" class="headerlink" title="URL协议"></a>URL协议</h3><p><code>Random.protocol()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.protocol()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个 URL 协议。返回以下值之一：<code>&#39;http&#39;</code>、<code>&#39;ftp&#39;</code>、<code>&#39;gopher&#39;</code>、<code>&#39;mailto&#39;</code>、<code>&#39;mid&#39;</code>、<code>&#39;cid&#39;</code>、<code>&#39;news&#39;</code>、<code>&#39;nntp&#39;</code>、<code>&#39;prospero&#39;</code>、<code>&#39;telnet&#39;</code>、<code>&#39;rlogin&#39;</code>、<code>&#39;tn3270&#39;</code>、<code>&#39;wais&#39;</code>。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.protocol()</span><br><span class="line"><span class="comment">// =&gt; "ftp"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h3><p><code>Random.domain()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.domain()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个域名。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.domain()</span><br><span class="line"><span class="comment">// =&gt; "kozfnb.org"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="等级域名"><a href="#等级域名" class="headerlink" title="等级域名"></a>等级域名</h3><p><code>Random.tld()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.tld()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个顶级域名（Top Level Domain）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.tld()</span><br><span class="line"><span class="comment">// =&gt; "net"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="邮箱地址"><a href="#邮箱地址" class="headerlink" title="邮箱地址"></a>邮箱地址</h3><p><code>Random.email( domain? )</code></p>
+<ul>
+<li><code>Random.email()</code></li>
+<li><code>Random.email( domain )</code></li>
+</ul>
+<p>随机生成一个邮件地址。</p>
+<h4 id="参数-23"><a href="#参数-23" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>domain</code><br>指定邮件地址的域名。例如 nuysoft.com。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Random.email()</span><br><span class="line"><span class="comment">// =&gt; "x.davis@jackson.edu"</span></span><br><span class="line">Random.email(<span class="string">'nuysoft.com'</span>)</span><br><span class="line"><span class="comment">// =&gt; "h.pqpneix@nuysoft.com"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h3><p><code>Random.ip()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.ip()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个 IP 地址。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.ip()</span><br><span class="line"><span class="comment">// =&gt; "34.206.109.169"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="地址"><a href="#地址" class="headerlink" title="地址"></a>地址</h2><h3 id="中国大区"><a href="#中国大区" class="headerlink" title="中国大区"></a>中国大区</h3><p><code>Random.region()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.region()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个（中国）大区。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.region()</span><br><span class="line"><span class="comment">// =&gt; "华北"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="中国省"><a href="#中国省" class="headerlink" title="中国省"></a>中国省</h3><p><code>Random.province()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.province()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个（中国）省（或直辖市、自治区、特别行政区）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.province()</span><br><span class="line"><span class="comment">// =&gt; "黑龙江省"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="中国城市"><a href="#中国城市" class="headerlink" title="中国城市"></a>中国城市</h3><p><code>Random.city( prefix? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.city()</span><br><span class="line">Random.city( prefix )</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个（中国）市。</p>
+<h4 id="参数-24"><a href="#参数-24" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>prefix</code><br>可选。<br>布尔值。指示是否生成所属的省。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Random.city()</span><br><span class="line"><span class="comment">// =&gt; "唐山市"</span></span><br><span class="line">Random.city(<span class="literal">true</span>)</span><br><span class="line"><span class="comment">// =&gt; "福建省 漳州市"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="中国县"><a href="#中国县" class="headerlink" title="中国县"></a>中国县</h3><p><code>Random.county( prefix? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.county()</span><br><span class="line">Random.county( prefix )</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个（中国）县。</p>
+<h4 id="参数-25"><a href="#参数-25" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>prefix</code><br>可选。<br>布尔值。指示是否生成所属的省、市。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Random.county()</span><br><span class="line"><span class="comment">// =&gt; "上杭县"</span></span><br><span class="line">Random.county(<span class="literal">true</span>)</span><br><span class="line"><span class="comment">// =&gt; "甘肃省 白银市 会宁县"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="邮政编码"><a href="#邮政编码" class="headerlink" title="邮政编码"></a>邮政编码</h3><p><code>Random.zip()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.zip()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个邮政编码（六位数字）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.zip()</span><br><span class="line"><span class="comment">// =&gt; "908812"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><h3 id="首字母大写"><a href="#首字母大写" class="headerlink" title="首字母大写"></a>首字母大写</h3><p><code>Random.capitalize( word )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.capitalize(word)</span><br></pre></td></tr></table></figure></p>
+<p>把字符串的第一个字母转换为大写。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.capitalize(<span class="string">'hello'</span>)</span><br><span class="line"><span class="comment">// =&gt; "Hello"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="全大写"><a href="#全大写" class="headerlink" title="全大写"></a>全大写</h3><p><code>Random.upper( str )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.upper( str )</span><br></pre></td></tr></table></figure></p>
+<p>把字符串转换为大写。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.upper(<span class="string">'hello'</span>)</span><br><span class="line"><span class="comment">// =&gt; "HELLO"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="全小写"><a href="#全小写" class="headerlink" title="全小写"></a>全小写</h3><p>Random.lower( str )<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.lower( str )</span><br></pre></td></tr></table></figure></p>
+<p>把字符串转换为小写。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.lower(<span class="string">'HELLO'</span>)</span><br><span class="line"><span class="comment">// =&gt; "hello"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="数组取数据"><a href="#数组取数据" class="headerlink" title="数组取数据"></a>数组取数据</h3><p><code>Random.pick( arr )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.pick( arr )</span><br></pre></td></tr></table></figure></p>
+<p>从数组中随机选取一个元素，并返回。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.pick([<span class="string">'a'</span>, <span class="string">'e'</span>, <span class="string">'i'</span>, <span class="string">'o'</span>, <span class="string">'u'</span>])</span><br><span class="line"><span class="comment">// =&gt; "o"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="打乱数组"><a href="#打乱数组" class="headerlink" title="打乱数组"></a>打乱数组</h3><p><code>Random.shuffle( arr )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.shuffle( arr )</span><br></pre></td></tr></table></figure></p>
+<p>打乱数组中元素的顺序，并返回。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.shuffle([<span class="string">'a'</span>, <span class="string">'e'</span>, <span class="string">'i'</span>, <span class="string">'o'</span>, <span class="string">'u'</span>])</span><br><span class="line"><span class="comment">// =&gt; ["o", "u", "e", "i", "a"]</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="编码类"><a href="#编码类" class="headerlink" title="编码类"></a>编码类</h2><h3 id="全局唯一标识符"><a href="#全局唯一标识符" class="headerlink" title="全局唯一标识符"></a>全局唯一标识符</h3><p><code>Random.guid()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.guid()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个GUID。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.guid()</span><br><span class="line"><span class="comment">// =&gt; "662C63B4-FD43-66F4-3328-C54E3FF0D56E"</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Random.guid() 的实现参考了 UUID 规范。</p>
+</blockquote>
+<h3 id="身份证"><a href="#身份证" class="headerlink" title="身份证"></a>身份证</h3><p><code>Random.id()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Random.id()</span><br></pre></td></tr></table></figure></p>
+<p>随机生成一个 18 位身份证。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.id()</span><br><span class="line"><span class="comment">// =&gt; "420000200710091854"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="自增整数"><a href="#自增整数" class="headerlink" title="自增整数"></a>自增整数</h3><p><code>Random.increment( step? )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random.increment()</span><br><span class="line">Random.increment( step )</span><br></pre></td></tr></table></figure></p>
+<p>生成一个全局的自增整数。</p>
+<h4 id="参数-26"><a href="#参数-26" class="headerlink" title="参数"></a>参数</h4><ul>
+<li><code>step</code><br>可选。<br>整数自增的步长。默认值为 1。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Random.increment()</span><br><span class="line"><span class="comment">// =&gt; 1</span></span><br><span class="line">Random.increment(<span class="number">100</span>)</span><br><span class="line"><span class="comment">// =&gt; 101</span></span><br><span class="line">Random.increment(<span class="number">1000</span>)</span><br><span class="line"><span class="comment">// =&gt; 1101</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Mock-valid"><a href="#Mock-valid" class="headerlink" title="Mock.valid()"></a>Mock.valid()</h1><p><code>Mock.valid( template, data )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mock.valid( template, data )</span><br></pre></td></tr></table></figure></p>
+<p>校验真实数据 data 是否与数据模板 template 匹配。</p>
+<h2 id="参数-27"><a href="#参数-27" class="headerlink" title="参数"></a>参数</h2><ul>
+<li><code>template</code><br>必选。<br>表示数据模板，可以是对象或字符串。例如 { ‘list|1-10’:[{}] }、‘@EMAIL’。</li>
+<li><code>data</code><br>必选。<br>表示真实数据。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> template = &#123;</span><br><span class="line">    name: <span class="string">'value1'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    name: <span class="string">'value2'</span></span><br><span class="line">&#125;</span><br><span class="line">Mock.valid(template, data)</span><br><span class="line"><span class="comment">// =&gt;</span></span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"path"</span>: [</span><br><span class="line">            <span class="string">"data"</span>,</span><br><span class="line">            <span class="string">"name"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"type"</span>: <span class="string">"value"</span>,</span><br><span class="line">        <span class="string">"actual"</span>: <span class="string">"value2"</span>,</span><br><span class="line">        <span class="string">"expected"</span>: <span class="string">"value1"</span>,</span><br><span class="line">        <span class="string">"action"</span>: <span class="string">"equal to"</span>,</span><br><span class="line">        <span class="string">"message"</span>: <span class="string">"[VALUE] Expect ROOT.name'value is equal to value1, but is value2"</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Mock-toJSONSchema"><a href="#Mock-toJSONSchema" class="headerlink" title="Mock.toJSONSchema()"></a>Mock.toJSONSchema()</h1><p><code>Mock.toJSONSchema( template )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mock.toJSONSchema( template )</span><br></pre></td></tr></table></figure></p>
+<p>把 Mock.js 风格的数据模板 template 转换成 JSON Schema。</p>
+<h2 id="参数-28"><a href="#参数-28" class="headerlink" title="参数"></a>参数</h2><ul>
+<li><code>template</code><br>必选。<br>表示数据模板，可以是对象或字符串。例如 { ‘list|1-10’:[{}] }、‘@EMAIL’。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> template = &#123;</span><br><span class="line">    <span class="string">'key|1-10'</span>: <span class="string">'★'</span></span><br><span class="line">&#125;</span><br><span class="line">Mock.toJSONSchema(template)</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">// =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: undefined,</span><br><span class="line">    <span class="attr">"path"</span>: [</span><br><span class="line">        <span class="string">"ROOT"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"object"</span>,</span><br><span class="line">    <span class="attr">"template"</span>: &#123;</span><br><span class="line">        <span class="attr">"key|1-10"</span>: <span class="string">"★"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"rule"</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">"properties"</span>: [&#123;</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"key"</span>,</span><br><span class="line">        <span class="attr">"path"</span>: [</span><br><span class="line">            <span class="string">"ROOT"</span>,</span><br><span class="line">            <span class="string">"key"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"string"</span>,</span><br><span class="line">        <span class="attr">"template"</span>: <span class="string">"★"</span>,</span><br><span class="line">        <span class="attr">"rule"</span>: &#123;</span><br><span class="line">            <span class="attr">"parameters"</span>: [<span class="string">"key|1-10"</span>, <span class="string">"key"</span>, <span class="literal">null</span>, <span class="string">"1-10"</span>, <span class="literal">null</span>],</span><br><span class="line">            <span class="attr">"range"</span>: [<span class="string">"1-10"</span>, <span class="string">"1"</span>, <span class="string">"10"</span>],</span><br><span class="line">            <span class="attr">"min"</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="attr">"max"</span>: <span class="number">10</span>,</span><br><span class="line">            <span class="attr">"count"</span>: <span class="number">3</span>,</span><br><span class="line">            <span class="attr">"decimal"</span>: undefined,</span><br><span class="line">            <span class="attr">"dmin"</span>: undefined,</span><br><span class="line">            <span class="attr">"dmax"</span>: undefined,</span><br><span class="line">            <span class="attr">"dcount"</span>: undefined</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> template = &#123;</span><br><span class="line">    <span class="string">'list|1-10'</span>: [&#123;&#125;]</span><br><span class="line">&#125;</span><br><span class="line">Mock.toJSONSchema(template)</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">// =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: undefined,</span><br><span class="line">    <span class="attr">"path"</span>: [<span class="string">"ROOT"</span>],</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"object"</span>,</span><br><span class="line">    <span class="attr">"template"</span>: &#123;</span><br><span class="line">        <span class="attr">"list|1-10"</span>: [&#123;&#125;]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"rule"</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">"properties"</span>: [&#123;</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"list"</span>,</span><br><span class="line">        <span class="attr">"path"</span>: [<span class="string">"ROOT"</span>, <span class="string">"list"</span>],</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"array"</span>,</span><br><span class="line">        <span class="attr">"template"</span>: [&#123;&#125;],</span><br><span class="line">        <span class="attr">"rule"</span>: &#123;</span><br><span class="line">            <span class="attr">"parameters"</span>: [<span class="string">"list|1-10"</span>, <span class="string">"list"</span>, <span class="literal">null</span>, <span class="string">"1-10"</span>, <span class="literal">null</span>],</span><br><span class="line">            <span class="attr">"range"</span>: [<span class="string">"1-10"</span>, <span class="string">"1"</span>, <span class="string">"10"</span>],</span><br><span class="line">            <span class="attr">"min"</span>: <span class="number">1</span>,</span><br><span class="line">            <span class="attr">"max"</span>: <span class="number">10</span>,</span><br><span class="line">            <span class="attr">"count"</span>: <span class="number">6</span>,</span><br><span class="line">            <span class="attr">"decimal"</span>: undefined,</span><br><span class="line">            <span class="attr">"dmin"</span>: undefined,</span><br><span class="line">            <span class="attr">"dmax"</span>: undefined,</span><br><span class="line">            <span class="attr">"dcount"</span>: undefined</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"items"</span>: [&#123;</span><br><span class="line">            <span class="attr">"name"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"path"</span>: [<span class="string">"data"</span>, <span class="string">"list"</span>, <span class="number">0</span>],</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"object"</span>,</span><br><span class="line">            <span class="attr">"template"</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">"rule"</span>: &#123;&#125;,</span><br><span class="line">            <span class="attr">"properties"</span>: []</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------This article is over-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    <div>
+          
+            
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/02/28/Mock分离后端/">Mock分离后端</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Fidel Yiu 的个人博客">Fidel Yiu</a></p>
+  <p><span>发布时间:</span>2019年02月28日 - 11:02</p>
+  <p><span>最后更新:</span>2019年03月02日 - 15:03</p>
+  <p><span>原始链接:</span><a href="/2019/02/28/Mock分离后端/" title="Mock分离后端">https://vxiaoxin.github.io/2019/02/28/Mock分离后端/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://vxiaoxin.github.io/2019/02/28/Mock分离后端/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+    });
+    });
+</script>
+
+
+          
+    </div>
+
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"><i class="fa fa-tag"></i> 前端</a>
+          
+            <a href="/tags/Mock-js/" rel="tag"><i class="fa fa-tag"></i> Mock.js</a>
+          
+            <a href="/tags/分离后端/" rel="tag"><i class="fa fa-tag"></i> 分离后端</a>
+          
+            <a href="/tags/模拟数据/" rel="tag"><i class="fa fa-tag"></i> 模拟数据</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/27/JavaScript基础03-基本语法/" rel="next" title="JavaScript基础03-基本语法">
+                <i class="fa fa-chevron-left"></i> JavaScript基础03-基本语法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/01/致英子的情书3/" rel="prev" title="致英子的情书3">
+                致英子的情书3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/feidao-logo.jpg" alt="Fidel Yiu">
+            
+              <p class="site-author-name" itemprop="name">Fidel Yiu</p>
+              <p class="site-description motion-element" itemprop="description">大悲大喜过后,我还曾渴望过什么呢?<br>看着夕阳傻笑,看着霓虹灯落寞.<br>可我还有梦想呀,你一定要加油.<br>一直努力!</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/VXiaoXin" title="GitHub &rarr; https://github.com/VXiaoXin" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://gitee.com/" title="码云 &rarr; https://gitee.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>码云</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://blog.fangshuoit.com/" title="方硕公司博客 &rarr; http://blog.fangshuoit.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-graduation-cap"></i>方硕公司博客</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://gank.io/" title="干货小博客 &rarr; https://gank.io/" rel="noopener" target="_blank"><i class="fa fa-fw fa-graduation-cap"></i>干货小博客</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.xd0.com/" title="小刀资源 &rarr; https://www.xd0.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-flash"></i>小刀资源</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.kxdao.net/" title="科学刀 &rarr; https://www.kxdao.net/" rel="noopener" target="_blank"><i class="fa fa-fw fa-flash"></i>科学刀</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://cloud.tencent.com/developer/labs/gallery" title="云实验室 &rarr; https://cloud.tencent.com/developer/labs/gallery" rel="noopener" target="_blank"><i class="fa fa-fw fa-flash"></i>云实验室</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.sojson.com/ip/" title="IP查询 &rarr; https://www.sojson.com/ip/" rel="noopener" target="_blank"><i class="fa fa-fw fa-flash"></i>IP查询</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.baidu.com/" title="百度 &rarr; https://www.baidu.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-paw"></i>百度</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://fanyi.baidu.com/?aldtype=16047#auto/zh" title="百度翻译 &rarr; https://fanyi.baidu.com/?aldtype=16047#auto/zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-language"></i>百度翻译</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.processon.com/" title="Process On &rarr; https://www.processon.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-object-ungroup"></i>Process On</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://msdn.itellyou.cn/" title="系统下载 &rarr; https://msdn.itellyou.cn/" rel="noopener" target="_blank"><i class="fa fa-fw fa-file-archive-o"></i>系统下载</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.bilibili.com/" title="B站 &rarr; https://www.bilibili.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-bold"></i>B站</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.heimidy.cc/index.html" title="黑米影院 &rarr; https://www.heimidy.cc/index.html" rel="noopener" target="_blank"><i class="fa fa-fw fa-video-camera"></i>黑米影院</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://doc.vue-js.com/" title="Vue &rarr; http://doc.vue-js.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>Vue</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://youzan.github.io/vant/#/zh-CN/intro" title="Vant &rarr; https://youzan.github.io/vant/#/zh-CN/intro" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>Vant</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.iviewui.com/" title="iview &rarr; https://www.iviewui.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>iview</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://admin.iviewui.com/login" title="iview-admin &rarr; https://admin.iviewui.com/login" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>iview-admin</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.iconfont.cn/" title="阿里矢量图库 &rarr; https://www.iconfont.cn/" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>阿里矢量图库</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://fontawesome.dashgame.com/" title="Font Awesome &rarr; http://fontawesome.dashgame.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>Font Awesome</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://so.uigreat.com/" title="UI设计师导航 &rarr; http://so.uigreat.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>UI设计师导航</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://dribbble.com/" title="Dribbble &rarr; https://dribbble.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-underline"></i>Dribbble</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://streetwill.co/" title="Streetwill &rarr; http://streetwill.co/" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>Streetwill</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://wall.alphacoders.com/?lang=Chinese" title="WALLPAPER ABYSS &rarr; https://wall.alphacoders.com/?lang=Chinese" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>WALLPAPER ABYSS</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://alpha.wallhaven.cc/" title="Wallhaven &rarr; https://alpha.wallhaven.cc/" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>Wallhaven</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://unsplash.com/" title="Unsplash &rarr; https://unsplash.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>Unsplash</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.pexels.com/" title="Pexels &rarr; https://www.pexels.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>Pexels</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://weavesilk.com/" title="WeaveSilk &rarr; http://weavesilk.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>WeaveSilk</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.ssyer.com/home" title="沙沙兔 &rarr; https://www.ssyer.com/home" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>沙沙兔</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://www.bigbigwork.com/" title="大作 &rarr; http://www.bigbigwork.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-picture-o"></i>大作</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mockjs"><span class="nav-number">1.</span> <span class="nav-text">Mockjs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node"><span class="nav-number">1.1.1.</span> <span class="nav-text">Node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bower"><span class="nav-number">1.1.2.</span> <span class="nav-text">Bower</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RequireJS-AMD"><span class="nav-number">1.1.3.</span> <span class="nav-text">RequireJS (AMD)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语法规范"><span class="nav-number">1.2.</span> <span class="nav-text">语法规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据模板定义规范-DTD"><span class="nav-number">1.2.1.</span> <span class="nav-text">数据模板定义规范 DTD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#生成规则和示例："><span class="nav-number">1.2.1.1.</span> <span class="nav-text">生成规则和示例：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#String"><span class="nav-number">1.2.1.1.1.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Number"><span class="nav-number">1.2.1.1.2.</span> <span class="nav-text">Number</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Boolean"><span class="nav-number">1.2.1.1.3.</span> <span class="nav-text">Boolean</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Object"><span class="nav-number">1.2.1.1.4.</span> <span class="nav-text">Object</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Array"><span class="nav-number">1.2.1.1.5.</span> <span class="nav-text">Array</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Function"><span class="nav-number">1.2.1.1.6.</span> <span class="nav-text">Function</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RegExp"><span class="nav-number">1.2.1.1.7.</span> <span class="nav-text">RegExp</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据占位符定义规范-DPD"><span class="nav-number">1.2.2.</span> <span class="nav-text">数据占位符定义规范 DPD</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mock-mock"><span class="nav-number">2.</span> <span class="nav-text">Mock.mock()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#语法"><span class="nav-number">2.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数"><span class="nav-number">2.2.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mock-setup"><span class="nav-number">3.</span> <span class="nav-text">Mock.setup()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参数-1"><span class="nav-number">3.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mock-Random"><span class="nav-number">4.</span> <span class="nav-text">Mock.Random</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">4.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展"><span class="nav-number">4.2.</span> <span class="nav-text">扩展</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各种数据"><span class="nav-number">5.</span> <span class="nav-text">各种数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型"><span class="nav-number">5.1.</span> <span class="nav-text">基本类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#随机布值"><span class="nav-number">5.1.1.</span> <span class="nav-text">随机布值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-2"><span class="nav-number">5.1.1.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机自然数"><span class="nav-number">5.1.2.</span> <span class="nav-text">随机自然数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-3"><span class="nav-number">5.1.2.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机整数"><span class="nav-number">5.1.3.</span> <span class="nav-text">随机整数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-4"><span class="nav-number">5.1.3.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机浮点数"><span class="nav-number">5.1.4.</span> <span class="nav-text">随机浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-5"><span class="nav-number">5.1.4.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机字符"><span class="nav-number">5.1.5.</span> <span class="nav-text">随机字符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-6"><span class="nav-number">5.1.5.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机字符串"><span class="nav-number">5.1.6.</span> <span class="nav-text">随机字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-7"><span class="nav-number">5.1.6.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整型数组"><span class="nav-number">5.1.7.</span> <span class="nav-text">整型数组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-8"><span class="nav-number">5.1.7.1.</span> <span class="nav-text">参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间日期"><span class="nav-number">5.2.</span> <span class="nav-text">时间日期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#日期字符串"><span class="nav-number">5.2.1.</span> <span class="nav-text">日期字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-9"><span class="nav-number">5.2.1.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间字符串"><span class="nav-number">5.2.2.</span> <span class="nav-text">时间字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-10"><span class="nav-number">5.2.2.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日期时间字符串"><span class="nav-number">5.2.3.</span> <span class="nav-text">日期时间字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-11"><span class="nav-number">5.2.3.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#当前日期时间字符串"><span class="nav-number">5.2.4.</span> <span class="nav-text">当前日期时间字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-12"><span class="nav-number">5.2.4.1.</span> <span class="nav-text">参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片"><span class="nav-number">5.3.</span> <span class="nav-text">图片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#随机图片地址"><span class="nav-number">5.3.1.</span> <span class="nav-text">随机图片地址</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-13"><span class="nav-number">5.3.1.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Base64图片编码"><span class="nav-number">5.3.2.</span> <span class="nav-text">Base64图片编码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-14"><span class="nav-number">5.3.2.1.</span> <span class="nav-text">参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#颜色"><span class="nav-number">5.4.</span> <span class="nav-text">颜色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色-RRGGBB"><span class="nav-number">5.4.1.</span> <span class="nav-text">颜色#RRGGBB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色-RRGGBB-1"><span class="nav-number">5.4.2.</span> <span class="nav-text">颜色(#RRGGBB)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色rgb-r-g-b"><span class="nav-number">5.4.3.</span> <span class="nav-text">颜色rgb(r,g,b)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色rgba-r-g-b-a"><span class="nav-number">5.4.4.</span> <span class="nav-text">颜色rgba(r,g,b,a)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色hsl-h-s-l"><span class="nav-number">5.4.5.</span> <span class="nav-text">颜色hsl(h,s,l)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本"><span class="nav-number">5.5.</span> <span class="nav-text">文本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一段英文文本"><span class="nav-number">5.5.1.</span> <span class="nav-text">一段英文文本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-15"><span class="nav-number">5.5.1.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一段中文文本"><span class="nav-number">5.5.2.</span> <span class="nav-text">一段中文文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一句英文"><span class="nav-number">5.5.3.</span> <span class="nav-text">一句英文</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-16"><span class="nav-number">5.5.3.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一句中文"><span class="nav-number">5.5.4.</span> <span class="nav-text">一句中文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个单词"><span class="nav-number">5.5.5.</span> <span class="nav-text">一个单词</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-17"><span class="nav-number">5.5.5.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个字"><span class="nav-number">5.5.6.</span> <span class="nav-text">一个字</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-18"><span class="nav-number">5.5.6.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#英文标题"><span class="nav-number">5.5.7.</span> <span class="nav-text">英文标题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-19"><span class="nav-number">5.5.7.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中文标题"><span class="nav-number">5.5.8.</span> <span class="nav-text">中文标题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-20"><span class="nav-number">5.5.8.1.</span> <span class="nav-text">参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#名字"><span class="nav-number">5.6.</span> <span class="nav-text">名字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#英文名"><span class="nav-number">5.6.1.</span> <span class="nav-text">英文名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#英文姓"><span class="nav-number">5.6.2.</span> <span class="nav-text">英文姓</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#英文姓名"><span class="nav-number">5.6.3.</span> <span class="nav-text">英文姓名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-21"><span class="nav-number">5.6.3.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中文名"><span class="nav-number">5.6.4.</span> <span class="nav-text">中文名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中文姓"><span class="nav-number">5.6.5.</span> <span class="nav-text">中文姓</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中文姓名"><span class="nav-number">5.6.6.</span> <span class="nav-text">中文姓名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网址"><span class="nav-number">5.7.</span> <span class="nav-text">网址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#URL"><span class="nav-number">5.7.1.</span> <span class="nav-text">URL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-22"><span class="nav-number">5.7.1.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URL协议"><span class="nav-number">5.7.2.</span> <span class="nav-text">URL协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#域名"><span class="nav-number">5.7.3.</span> <span class="nav-text">域名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#等级域名"><span class="nav-number">5.7.4.</span> <span class="nav-text">等级域名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮箱地址"><span class="nav-number">5.7.5.</span> <span class="nav-text">邮箱地址</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-23"><span class="nav-number">5.7.5.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP地址"><span class="nav-number">5.7.6.</span> <span class="nav-text">IP地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地址"><span class="nav-number">5.8.</span> <span class="nav-text">地址</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中国大区"><span class="nav-number">5.8.1.</span> <span class="nav-text">中国大区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中国省"><span class="nav-number">5.8.2.</span> <span class="nav-text">中国省</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中国城市"><span class="nav-number">5.8.3.</span> <span class="nav-text">中国城市</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-24"><span class="nav-number">5.8.3.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中国县"><span class="nav-number">5.8.4.</span> <span class="nav-text">中国县</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-25"><span class="nav-number">5.8.4.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮政编码"><span class="nav-number">5.8.5.</span> <span class="nav-text">邮政编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据处理"><span class="nav-number">5.9.</span> <span class="nav-text">数据处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首字母大写"><span class="nav-number">5.9.1.</span> <span class="nav-text">首字母大写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全大写"><span class="nav-number">5.9.2.</span> <span class="nav-text">全大写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全小写"><span class="nav-number">5.9.3.</span> <span class="nav-text">全小写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组取数据"><span class="nav-number">5.9.4.</span> <span class="nav-text">数组取数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打乱数组"><span class="nav-number">5.9.5.</span> <span class="nav-text">打乱数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码类"><span class="nav-number">5.10.</span> <span class="nav-text">编码类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局唯一标识符"><span class="nav-number">5.10.1.</span> <span class="nav-text">全局唯一标识符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#身份证"><span class="nav-number">5.10.2.</span> <span class="nav-text">身份证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自增整数"><span class="nav-number">5.10.3.</span> <span class="nav-text">自增整数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参数-26"><span class="nav-number">5.10.3.1.</span> <span class="nav-text">参数</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mock-valid"><span class="nav-number">6.</span> <span class="nav-text">Mock.valid()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参数-27"><span class="nav-number">6.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mock-toJSONSchema"><span class="nav-number">7.</span> <span class="nav-text">Mock.toJSONSchema()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参数-28"><span class="nav-number">7.1.</span> <span class="nav-text">参数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+
+  <span class="post-meta-divider">|</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fidel Yiu</span>
+
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+    <div class="powered-by"></div>
+    <span class="post-count">博客全站共67.6k字</span>
+  </div>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      你是第<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>位访客
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次
+    </span>
+  
+</div>
+
+
+
+
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=66179865";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'cpXAhhUV7pHMnxNo6HWTcDYP-gzGzoHsz',
+    appKey: 'xPdyQq7iGeJDUKMSYw9NJEzN',
+    placeholder: '评论不常管理,可以发表发表你的看法',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+</html>
